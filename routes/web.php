@@ -18,5 +18,5 @@ Route::get('/', function () {
 });
 
 Route::get('/escritorio', function () {
-    return 'Hello world!';
+    return view('welcome');
 });
