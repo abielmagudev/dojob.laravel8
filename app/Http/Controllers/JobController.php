@@ -32,7 +32,7 @@ class JobController extends Controller
     {
         return view('jobs.edit', [
             'job' => $job,
-            'extensions' => Extension::all(),
+            'extensions' => Extension::all()->sortBy('model_class'),
         ]);
     }
 
