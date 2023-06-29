@@ -12,7 +12,7 @@
                 <tr>
                     <td style="width:1%">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="{{ $element_id }}" name="extensions[]" value="{{ $extension->id }}" @checked( $job->extensions->find($extension->id) )>
+                            <input class="form-check-input" type="checkbox" id="{{ $element_id }}" name="extensions[]" value="{{ $extension->id }}" {{ isChecked( $job->extensions->contains('id', $extension->id) ) }}>
                         </div>
                     </td>
                     <td>
