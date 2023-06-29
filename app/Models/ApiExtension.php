@@ -34,6 +34,10 @@ class ApiExtension extends Model
                 'controller_class' => \App\Http\Controllers\ApiExtensions\BattInsulationCalculationController::class,
             ],
             [
+                'model_class' => \App\Models\ApiExtensions\PreventiveMaintenance::class,
+                'controller_class' => \App\Http\Controllers\ApiExtensions\PreventiveMaintenanceController::class,
+            ],
+            [
                 'model_class' => \App\Models\ApiExtensions\MinisplitInstallation::class,
                 'controller_class' => \App\Http\Controllers\ApiExtensions\MinisplitInstallationController::class,
             ],
