@@ -26,7 +26,7 @@
                     <td>{{ $api_extension->model_class::getDescription() }}</td>
                     <td>
                     @foreach($api_extension->tags_array as $tag)
-                        <span class="badge rounded-pill text-bg-dark">{{ $tag }}</span>
+                        <a href="{{ route('extensions.index', ['tags' => $tag]) }}" class="badge rounded-pill text-bg-dark">{{ $tag }}</a>
                     @endforeach
                     </td>
                     <td class='text-end'>

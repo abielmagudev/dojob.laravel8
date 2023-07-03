@@ -11,7 +11,7 @@ class ExtensionController extends Controller
     public function index(Request $request)
     {
         return view('extensions.index', [
-            'api_extensions' => ApiExtension::all(),
+            'api_extensions' => $request->has('tags') ? ApiExtension::hasTags($request->tags)->get() : ApiExtension::all(),
             'extensions' => Extension::all(),
             'tags' => $request->get('tags', ''),
         ]);

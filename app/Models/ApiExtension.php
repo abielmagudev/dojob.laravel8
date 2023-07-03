@@ -10,11 +10,20 @@ class ApiExtension extends Model
 {
     use HasFactory;
 
+    // Attributes
+
     public function getTagsArrayAttribute()
     {
         return str_getcsv($this->tags_csv_format);
     }
 
+
+    // Scopes
+
+    public function scopeHasTags($query, $tags)
+    {
+        return $query->where('tags_csv_format', 'like', "%{$tags}%");
+    }
 
     // ONLY FOR FACTORY AND SEEDING
 
