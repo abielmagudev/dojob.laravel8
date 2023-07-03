@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->tinyInteger('successful_inspections', false, true)->default(0);
             $table->boolean('is_available')->default(true);
             $table->timestamps();
         });

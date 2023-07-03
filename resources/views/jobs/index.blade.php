@@ -9,8 +9,9 @@
             <tr>
                 <th scope="col">Job</th>
                 <th scope="col">Description</th>
-                <th scope="col">Extensions</th>
+                <th scope="col">Successful inspections</th>
                 <th scope="col">Orders</th>
+                <th scope="col">Extensions</th>
                 <th></th>
             </tr>
         </thead>
@@ -19,8 +20,9 @@
             <tr>
                 <td scope="row">{{ $job->name }}</td>
                 <td>{{ $job->description }}</td>
-                <td>{{ $job->extensions_count }}</td>
+                <td>{{ $job->successful_inspections }}</td>
                 <td>{{ $job->orders_count }}</td>
+                <td>{{ $job->extensions_count ? 'Yes' : 'No' }}</td>
                 <td class="text-end">
                     <a href="{{ route('jobs.show', $job) }}" class="btn btn-outline-primary btn-sm">
                         <span>Show</span>

@@ -20,7 +20,7 @@ class JobController extends Controller
 
     public function store(Request $request)
     {
-        //
+        return 'Waiting to save job...';
     }
 
     public function show(Job $job)
