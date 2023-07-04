@@ -26,8 +26,8 @@
                 </td>
                 <td>
                     <label class="form-check-label d-block" for="{{ $element_id }}">
-                        {{ $extension->model_class::getName() }}
-                        <small class="d-block text-muted">{{ $extension->model_class::getDescription() }}</small>
+                        {{ $extension->info->name }}
+                        <small class="d-block text-muted">{{ $extension->info->description }}</small>
                     </label>
                 </td>
             </tr>
