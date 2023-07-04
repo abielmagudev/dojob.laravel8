@@ -17,10 +17,6 @@ class MinisplitInstallation extends Model
 
     public $prefix = 'mi';
 
-    public $name = 'Minisplit Installation';
-    
-    public $description = 'Minisplit installation description.';
-
     public static $all_pieces = [
         'air handler',
         'ductless air handler',

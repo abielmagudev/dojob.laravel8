@@ -16,8 +16,4 @@ class PreventiveMaintenance extends Model
     protected $table = 'api_extension_preventive_maintenance';
 
     public $prefix = 'pm';
-
-    public $name = 'Preventive Maintenance';
-    
-    public $description = 'Preventive Maintenance description.';
 }

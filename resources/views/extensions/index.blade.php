@@ -22,8 +22,8 @@
                 @foreach($api_extensions as $api_extension)             
                 <tr>
 
-                    <td>{{ $api_extension->model_class::getName() }}</td>
-                    <td>{{ $api_extension->model_class::getDescription() }}</td>
+                    <td>{{ $api_extension->name }}</td>
+                    <td>{{ $api_extension->description }}</td>
                     <td>
                     @foreach($api_extension->tags_array as $tag)
                         <a href="{{ route('extensions.index', ['tags' => $tag]) }}" class="badge rounded-pill text-bg-dark">{{ $tag }}</a>

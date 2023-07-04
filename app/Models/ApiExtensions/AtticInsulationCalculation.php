@@ -17,10 +17,6 @@ class AtticInsulationCalculation extends Model
 
     public $prefix = 'aic';
 
-    public $name = 'Attic Insulation Calculation';
-    
-    public $description = 'Attic Insulation Calculation description.';
-
     public static $all_methods_with_rvalues = [
         'airkrete' => [
             'R-21 (2x4)' => 0, // 750

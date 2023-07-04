@@ -17,10 +17,6 @@ class BattInsulationCalculation extends Model
 
     public $prefix = 'bic';
 
-    public $name = 'Batt Insulation Calculation';
-    
-    public $description = 'Batt insulation calculation description.';
-
     public static $all_methods_with_rvalues = [
         'attic' => array(
             'R-19',

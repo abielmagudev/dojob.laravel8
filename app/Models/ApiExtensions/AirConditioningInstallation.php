@@ -17,10 +17,6 @@ class AirConditioningInstallation extends Model
 
     public $prefix = 'aci';
 
-    public $name = 'Air Conditioning Installation';
-    
-    public $description = 'Air conditioning installation description.';
-
     public static $all_complete_items = [
         'change out',
         'system',

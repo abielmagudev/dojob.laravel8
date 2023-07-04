@@ -17,10 +17,6 @@ class WallInsulationCalculation extends Model
 
     public $prefix = 'wic';
 
-    public $name = 'Wall Insulation Calculation';
-    
-    public $description = 'Wall insulation calculation description.';
-
     public static $all_methods_with_rvalues = [
         'airkrete' => [
             'R-21 (2x4)' => 0, // 750
