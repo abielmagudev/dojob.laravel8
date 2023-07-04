@@ -20,7 +20,7 @@
             <tr>
                 <td scope="row">{{ $job->name }}</td>
                 <td>{{ $job->description }}</td>
-                <td>{{ $job->successful_inspections }}</td>
+                <td>{{ $job->successful_inspections_required }}</td>
                 <td>{{ $job->orders_count }}</td>
                 <td>{{ $job->extensions_count ? 'Yes' : 'No' }}</td>
                 <td class="text-end">

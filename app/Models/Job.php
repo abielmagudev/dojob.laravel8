@@ -12,17 +12,19 @@ class Job extends Model
     protected $fillable = [
         'name',
         'description',
+        'successful_inspections_required',
         'is_available',
     ];
 
 
     // Validators
 
-    public function hasExtensions()
+    public function hasExtensions(): bool
     {
         return (bool) $this->extensions->count();
     }
 
+    
     // Relationships
 
     public function orders()

@@ -9,7 +9,7 @@
 </div>
 <div class="mb-3">
     <label for="inputSuccessfulInspections" class="form-label">Successful inspections required</label>
-    <input type="number" step="1" min="0" class="form-control" id="inputSuccessfulInspections" name="successful_inspections" value="{{ old('successful_inspections', ($job->successful_inspections ?? 0)) }}">
+    <input type="number" step="1" min="0" class="form-control" id="inputSuccessfulInspections" name="successful_inspections_counter" value="{{ old('successful_inspections_required', ($job->successful_inspections_required ?? 0)) }}">
 </div>
 @if( is_int($job->id) )
 <p>Extensions</p>
