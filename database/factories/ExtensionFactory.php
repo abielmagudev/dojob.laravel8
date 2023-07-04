@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ExtensionFactory extends Factory
 {
-    protected $api_extensions_stock;
+    public static $api_extensions_cache;
 
     /**
      * Define the model's default state.
@@ -19,18 +19,20 @@ class ExtensionFactory extends Factory
      */
     public function definition(): array
     {
-        if( is_null($this->api_extensions_stock) )
-        {
-            $this->api_extensions_stock = ApiExtension::all();
-        }
-
-        $random_id = $this->faker->unique()->numberBetween(1, $this->api_extensions_stock->count());
-        $api_extension = $this->api_extensions_stock->find($random_id);
+        $api_extension_id = $this->faker->unique()->numberBetween(1, self::getApiExtensions()->count());
+        $api_extension = self::getApiExtensions()->find($api_extension_id);
                 
         return [
-            'model_class' => $api_extension->model_class,
-            'controller_class' => $api_extension->controller_class,
+            'api_extension_info' => json_encode($api_extension->info_array),
             'api_extension_id' => $api_extension->id,
         ];
+    }
+
+    public static function getApiExtensions()
+    {
+        if( is_null(self::$api_extensions_cache) )
+            self::$api_extensions_cache = ApiExtension::all();
+
+        return self::$api_extensions_cache;
     }
 }

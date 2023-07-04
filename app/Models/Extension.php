@@ -10,9 +10,8 @@ class Extension extends Model
     use HasFactory;
     
     protected $fillable = [
-        'model_class',
-        'controller_class',
         'is_available',
+        'api_extension_info',
         'api_extension_id',
     ];
     

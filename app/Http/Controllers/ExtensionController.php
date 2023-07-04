@@ -26,15 +26,14 @@ class ExtensionController extends Controller
 
         if(! 
             $extension = Extension::create([
-                'model_class' => $api_extension->model_class,
-                'controller_class' => $api_extension->controller_class,
+                'api_extension_info' => json_encode($api_extension->info_array), 
                 'api_extension_id' => $api_extension->id,
             ])
          )
             return back()->with('danger', 'Error installing the extension, please try again');
 
         return redirect()->route('extensions.index')->with('success',
-            sprintf('Extension %s installed', $extension->model_class::getName()) 
+            sprintf('Extension %s installed', $extension->api->name) 
         );
     }
 

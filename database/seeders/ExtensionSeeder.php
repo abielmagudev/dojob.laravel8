@@ -16,6 +16,6 @@ class ExtensionSeeder extends Seeder
     {        
         Extension::factory( 
             mt_rand(1, ApiExtension::all()->count())
-         )->create();
+        )->create();
     }
 }
