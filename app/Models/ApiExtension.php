@@ -12,6 +12,16 @@ class ApiExtension extends Model
 
     // Attributes
 
+    public function getInfoArrayAttribute()
+    {
+        return [
+            'name' => $this->name,
+            'description' => $this->description,
+            'model_class' => $this->model_class,
+            'controller_class' => $this->controller_class,
+        ];
+    }
+
     public function getTagsArrayAttribute()
     {
         return str_getcsv($this->tags_csv_format);
