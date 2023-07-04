@@ -14,7 +14,16 @@ class Extension extends Model
         'api_extension_info',
         'api_extension_id',
     ];
+
+    // Attributes
+
+    public function getInfoAttribute()
+    {
+        return json_decode($this->api_extension_info);
+    }
     
+
+    // Relations
     public function api()
     {
         return $this->belongsTo(ApiExtension::class, 'api_extension_id');
