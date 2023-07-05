@@ -12,9 +12,9 @@ class PreventiveMaintenanceController extends Controller
     {
         return [
             'template' => view('api-extensions/preventive-maintenance/create', [
-                'preventiveMaintenance' => PreventiveMaintenance::class,
+                'class' => PreventiveMaintenance::class,
             ])->render(),
-            'script' => null,
+            'script' => 'pm.js',
         ];
     }
 }
