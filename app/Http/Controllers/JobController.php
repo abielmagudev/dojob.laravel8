@@ -20,7 +20,10 @@ class JobController extends Controller
 
     public function store(Request $request)
     {
-        return 'Waiting to save job...';
+        if(! $job = Job::create($request->all()) )
+            return back()->with('danger', 'Job was not created, try again...');
+
+        return redirect()->route('jobs.index')->with('success', "Job {$job->name} created");
     }
 
     public function show(Job $job)
