@@ -33,7 +33,7 @@ if( typeof atticInsulationExtension == 'undefined' )
     
             this.rvalueElement.addEventListener('change', function (e) {
                 let option = this.options[e.target.selectedIndex]
-                let rvalue_amount = option.dataset.amount
+                let rvalue_amount = option.dataset.amount ?? 0
                 
                 self.totalBagsElement.textContent = self.calculateBagsBySquareFeets(
                     self.squareFeetsElement.value,
@@ -43,7 +43,7 @@ if( typeof atticInsulationExtension == 'undefined' )
     
             this.squareFeetsElement.addEventListener('keydown', function () {
                 let option = self.rvalueElement.options[self.rvalueElement.selectedIndex]
-                let rvalue_amount = option.dataset.amount
+                let rvalue_amount = option.dataset.amount ?? 0
 
                 self.totalBagsElement.textContent = self.calculateBagsBySquareFeets(
                     this.value,
