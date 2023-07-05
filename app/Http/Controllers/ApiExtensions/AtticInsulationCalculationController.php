@@ -12,7 +12,7 @@ class AtticInsulationCalculationController extends Controller
     {
         return [
             'template' => view('api-extensions/attic-insulation-calculation/create', [
-                'atticInsulationCalculation' => AtticInsulationCalculation::class,
+                'class' => AtticInsulationCalculation::class,
             ])->render(),
             'script' => 'aic.js',
         ];

@@ -1,10 +1,10 @@
 if( typeof atticInsulationExtension == 'undefined' )
 {
     const atticInsulationExtension = {
-        methodElement: document.getElementById('aicSelectMethod'),
-        rvalueElement: document.getElementById('aicSelectRValue'),
-        squareFeetsElement: document.getElementById('aicInputSquareFeets'),
-        totalBagsElement: document.getElementById('aicDivTotalBags'),
+        methodElement: document.getElementById('aic_selectMethod'),
+        rvalueElement: document.getElementById('aic_selectRValue'),
+        squareFeetsElement: document.getElementById('aic_inputSquareFeets'),
+        totalBagsElement: document.getElementById('aic_divTotalBags'),
         calculateBagsBySquareFeets: function (square_feets, rvalue_amount) {
             if( rvalue_amount == 0 || isNaN(square_feets) || square_feets.trim() == "" )
                 return 0;
