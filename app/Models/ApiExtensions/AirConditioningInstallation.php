@@ -2,20 +2,20 @@
 
 namespace App\Models\ApiExtensions;
 
+use App\Models\ApiExtensions\Kernel\HasGetters;
 use App\Models\ApiExtensions\Kernel\HasMigrationUpdates;
-use App\Models\ApiExtensions\Kernel\HasPropertyGetters;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class AirConditioningInstallation extends Model
 {
     use HasFactory;
+    use HasGetters;
     use HasMigrationUpdates;
-    use HasPropertyGetters;
+
+    const PREFIX = 'aci';
 
     protected $table = 'api_extension_air_conditioning_installation';
-
-    public $prefix = 'aci';
 
     public static $all_complete_items = [
         'change out',

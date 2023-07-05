@@ -2,20 +2,20 @@
 
 namespace App\Models\ApiExtensions;
 
+use App\Models\ApiExtensions\Kernel\HasGetters;
 use App\Models\ApiExtensions\Kernel\HasMigrationUpdates;
-use App\Models\ApiExtensions\Kernel\HasPropertyGetters;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class WallInsulationCalculation extends Model
 {
     use HasFactory;
+    use HasGetters;
     use HasMigrationUpdates;
-    use HasPropertyGetters;
+
+    const PREFIX = 'wic';
 
     protected $table = 'api_extension_wall_insulation_calculation';
-
-    public $prefix = 'wic';
 
     public static $all_methods_with_rvalues = [
         'airkrete' => [
