@@ -1,23 +1,60 @@
 if( typeof preventiveMaintenanceExtension == 'undefined' )
 {
     const preventiveMaintenanceExtension = {
-        container: document.getElementById('pm_nextSchedulesContainer'),
-        template: document.getElementById('pm_nextScheduleTemplate'),
-        addButton: document.getElementById('pm_addNextScheduleButton'),
-        listen: function () {
-            let self = this
+        adder: document.getElementById('pm_addNextScheduleButton'),
+        template: {
+            element: document.getElementById('pm_nextScheduleTemplate'),
+            clone: function () {
+                return this.element.content.cloneNode(true)
+            }
+        },
+        container: {
+            element: document.getElementById('pm_nextSchedulesContainer'),
+            append: function (element) {
+                this.element.appendChild(element)
+            },
+            childrenCount: function () {
+                return this.element.children.length
+            },
+            reindex: function () {
+                let children_count_cache = this.childrenCount()
 
-            this.addButton.addEventListener('click', function () {
-                let total = self.container.children.length
-
-                for(let index = 0; index < total; index++)
+                for(let index = 0; index < children_count_cache; index++)
                 {
-                    self.container.children[index].querySelector('label').textContent = `${index+1}. Next schedule`
+                    let number = index + 1 
+                    let new_id = "nextScheduleInput" + number
+                    this.element.children[index].querySelector('label').textContent = `${number}. Next schedule`
+                    this.element.children[index].querySelector('label').setAttribute('for', new_id)
+                    this.element.children[index].querySelector('input').id = new_id
                 }
+            },
+            delegateActionRemoveButtons: function () {
+                let self = this
 
-                let clone = self.template.content.cloneNode(true)
-                clone.querySelector('div > label').textContent = `${total+1}. Next schedule`
-                self.container.appendChild(clone)
+                this.element.addEventListener('click', function (e) {
+                    if( e.target.classList.contains('pm_removeNextScheduleButton') )
+                    {
+                        e.preventDefault()
+                        e.target.closest('div.pm_nextScheduleWrapper').remove()
+                    }
+    
+                    e.stopPropagation()
+                    self.reindex()
+                })
+            }
+        },
+        listen: function () {
+            let container = this.container
+            let template = this.template
+            
+            container.delegateActionRemoveButtons()
+
+            this.adder.addEventListener('click', function () {
+                let number = container.childrenCount() + 1
+                let clone = template.clone()
+                clone.querySelector('label').textContent = `${number}. Next schedule`
+                container.append(clone)
+                container.reindex()
             })
         }
     }
