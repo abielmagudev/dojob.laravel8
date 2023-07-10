@@ -13,6 +13,9 @@ if( typeof atticInsulationExtension == 'undefined' )
         },
         rvalues: {
             element: document.getElementById('aic_selectRValue'),
+            focus: function () {
+                this.element.focus()
+            },
             clear: function () {
                 while(this.element.children.length)
                     this.element.children[0].remove()
@@ -67,6 +70,7 @@ if( typeof atticInsulationExtension == 'undefined' )
 
             this.methods.listen( function (options) {
                 self.rvalues.reload(options)
+                self.rvalues.focus()
                 self.bags.zero()
             })
 

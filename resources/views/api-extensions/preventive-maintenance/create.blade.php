@@ -18,6 +18,6 @@
     </div>
 </template>
 <div class="text-end">
-    <button id="{{ $class::getWithPrefix('addNextScheduleButton') }}" class="btn btn-primary" type="button">Add next schedule</button>
+    <button id="{{ $class::getWithPrefix('addNextScheduleButton') }}" class="btn btn-outline-primary" type="button">Add next schedule</button>
 </div>
 
