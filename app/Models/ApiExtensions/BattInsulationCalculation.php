@@ -31,7 +31,7 @@ class BattInsulationCalculation extends Model
             'R-38',
             'R-60',
         ),
-        'wall'	=> array(
+        'wall' => array(
             'R-13',
             'R-19',
             'R-38',
