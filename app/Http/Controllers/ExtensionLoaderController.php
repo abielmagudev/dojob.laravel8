@@ -12,7 +12,13 @@ class ExtensionLoaderController extends Controller
         $job = Job::find($request->job);
 
         $templates = $job->extensions->map(function ($extension) use ($request) {
-            return app()->call([new $extension->info->controller_class, $request->method], $request->all());
+            return app()->call(
+                [
+                    new $extension->info->controller_class, 
+                    $request->method
+                ], 
+                $request->all()
+            );
         });
 
         return response()->json([

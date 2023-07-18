@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreOrderRequest;
 use App\Models\Job;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -15,19 +16,25 @@ class OrderController extends Controller
         ]);
     }
 
+    /**
+     * 1) Keeps the previous values for the views of the extensions 
+     * of the selected job, when the save failed the validation
+     * 
+     * 2) Return the view create with available jobs
+     */
     public function create()
     {
+        if( session()->has('errors') )
+            session()->reflash();
+
         return view('orders.create', [
             'jobs' => Job::withCount('extensions')->orderBy('name')->get(),
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(StoreOrderRequest $request)
     {
-        $request->dd();
+        return $request->validated();
     }
 
     public function show(Order $order)

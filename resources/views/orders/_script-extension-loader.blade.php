@@ -16,7 +16,7 @@ const selectJob = {
 const extensionsContainer = {
     element: document.getElementById('extensionsContainer'),
     spinner: {
-        element: document.getElementById('extensionsLoadingSpinner'),
+        element: document.getElementById('loadingMessage'),
         show: function () {
             this.element.classList.replace('d-none', 'd-block')
         },
@@ -63,7 +63,8 @@ const extensionsContainer = {
             },
             body: JSON.stringify({
                 job: job_id,
-                method: 'create'
+                method: 'create',
+                old: <?= json_encode( request()->old() ) ?>
             })
         })
 
