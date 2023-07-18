@@ -15,3 +15,11 @@ if(! function_exists('isChecked') )
         return $verified ? 'checked' : $default;
     }
 }
+
+if(! function_exists('bsInputInvalid') )
+{
+    function bsInputInvalid(bool $is_invalid)
+    {
+        return $is_invalid ? 'is-invalid' : '';
+    }
+}
