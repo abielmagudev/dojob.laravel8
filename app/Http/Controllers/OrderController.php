@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreOrderRequest;
+use App\Http\Requests\OrderStoreRequest;
 use App\Models\Job;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -32,7 +32,7 @@ class OrderController extends Controller
         ]);
     }
 
-    public function store(StoreOrderRequest $request)
+    public function store(OrderStoreRequest $request)
     {
         return $request->validated();
     }
