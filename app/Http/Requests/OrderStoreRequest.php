@@ -2,15 +2,13 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Job;
 use Illuminate\Foundation\Http\FormRequest;
 
 class OrderStoreRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
+    public $form_requests = [];
+
     public function authorize()
     {
         return true;
@@ -23,19 +21,49 @@ class OrderStoreRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'scheduled_date' => ['required'],
             'scheduled_time' => ['required'],
             'job' => ['required'],
         ];
+
+        $extra = [];
+
+        foreach($this->form_requests as $form_request)
+            array_push($extra, $form_request->rules());
+
+        return array_merge($rules, ...$extra);
     }
 
     public function messages()
     {
-        return [
+        $messages = [
             'scheduled_date.required' => __('Date is required'),
             'scheduled_time.required' => __('Time is required'),
             'job.required' => __('Job is required'),
         ];
+
+        foreach($this->form_requests as $form_request)
+            $messages = array_merge($messages, $form_request->messages());
+
+        return $messages;
+    }
+
+    public function prepareForValidation()
+    {
+        $job = Job::find($this->job);
+
+        foreach($job->extensions as $extension)
+        {
+            if(! isset($extension->info->classname) )
+                continue;
+
+            $form_request_store = __NAMESPACE__ . '\\ApiExtensions\\' . $extension->info->classname . '\\StoreRequest';
+
+            if(! class_exists($form_request_store) )
+                continue;
+
+            array_push($this->form_requests, (new $form_request_store));
+        }
     }
 }
