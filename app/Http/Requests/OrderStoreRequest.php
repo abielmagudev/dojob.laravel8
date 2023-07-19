@@ -51,7 +51,8 @@ class OrderStoreRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        $job = Job::find($this->job);
+        if(! $job = Job::find($this->job) )
+            return;
 
         foreach($job->extensions as $extension)
         {
