@@ -55,13 +55,41 @@ class AtticInsulationCalculation extends Model
         ],
     ];
 
-    public static function getAllMethodsWithRValues()
+    public static function getAllMethodsWithRValues(): array
     {
         return self::$all_methods_with_rvalues;
     }
 
-    public static function getAllMethods()
+    public static function getAllMethods(): array
     {
         return array_keys(self::$all_methods_with_rvalues);
+    }
+
+    public static function getRValuesMethod(string $method_name): array
+    {
+        if(! in_array($method_name, self::getAllMethods()) )
+            return [];
+
+        return self::getAllMethodsWithRValues()[$method_name];
+    }
+
+    public static function getRValueAmount(string $method_name, string $rvalue_name)
+    {
+        $rvalues = self::getRValuesMethod($method_name);
+
+        if(! array_key_exists($rvalue_name, $rvalues) )
+            return 0;
+
+        return $rvalues[$rvalue_name];
+    }
+
+    public static function calculateBags(string $method_name, string $rvalue_name, float $square_feets)
+    {
+        $rvalue_amount = self::getRValueAmount($method_name, $rvalue_name);
+
+        if( $rvalue_amount == 0 || $square_feets == 0 )
+            return 0;
+        
+        return ceil( ($square_feets / $rvalue_amount) );
     }
 }
