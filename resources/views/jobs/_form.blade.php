@@ -17,7 +17,7 @@
     <table class="table">
         <tbody>
             @foreach($extensions as $extension)
-            <?php $element_id = "extension{$extension->acronym_name }" ?>
+            <?php $element_id = "extension{$extension->initials_name }" ?>
             <tr>
                 <td style="width:1%">
                     <div class="form-check">

@@ -26,15 +26,15 @@ class Extension extends Model
         return $this->api_extension_id;
     }
 
-    public function getAcronymNameAttribute()
+    public function getInitialsNameAttribute()
     {
         $words = explode(' ', $this->name);
 
-        $valid_words = array_map(function ($word) {
+        $initials_name = array_map(function ($word) {
             return ctype_alpha($word[0]) ? $word[0] : '';
         }, $words);
 
-        return implode($valid_words);
+        return implode($initials_name);
     }
 
     public function getControllerClassAttribute()
