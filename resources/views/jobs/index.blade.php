@@ -8,7 +8,6 @@
         <thead>
             <tr>
                 <th scope="col">Job</th>
-                <th scope="col">Description</th>
                 <th scope="col">Orders</th>
                 <th scope="col">Extensions</th>
                 <th></th>
@@ -17,10 +16,12 @@
         <tbody>
             @foreach($jobs as $job)               
             <tr>
-                <td scope="row">{{ $job->name }}</td>
-                <td>{{ $job->description }}</td>
+                <td scope="row">
+                    <p class="mb-0">{{ $job->name }}</p>
+                    <small class="text-muted">{{ $job->description }}</small>
+                </td>
                 <td>{{ $job->orders_count }}</td>
-                <td>{{ $job->extensions_count ? 'Yes' : 'No' }}</td>
+                <td>{{ $job->extensions_count }}</td>
                 <td class="text-nowrap text-end">
                     <a href="{{ route('jobs.show', $job) }}" class="btn btn-outline-primary btn-sm">
                         <span>Show</span>

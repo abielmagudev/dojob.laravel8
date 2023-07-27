@@ -13,7 +13,6 @@
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Description</th>
                 <th>Tags</th>
                 <th></th>
             </tr>
@@ -22,8 +21,10 @@
                 @foreach($api_extensions as $api_extension)             
                 <tr>
 
-                    <td>{{ $api_extension->name }}</td>
-                    <td>{{ $api_extension->description }}</td>
+                    <td>
+                        <p class='mb-0'>{{ $api_extension->name }}</p>
+                        <small class='text-muted'>{{ $api_extension->description }}</small>
+                    </td>
                     <td>
                     @foreach($api_extension->tags_array as $tag)
                         <a href="{{ route('extensions.index', ['tags' => $tag]) }}" class="badge rounded-pill text-bg-dark">{{ $tag }}</a>
