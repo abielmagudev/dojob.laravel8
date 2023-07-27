@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ApiExtensionComponentController;
 use App\Http\Controllers\ExtensionController;
 use App\Http\Controllers\ExtensionLoaderController;
 use App\Http\Controllers\JobController;
