@@ -28,14 +28,14 @@ class JobController extends Controller
 
     public function show(Job $job)
     {
-        return view('jobs.show')->with('job', $job->load('extensions.api'));
+        return view('jobs.show')->with('job', $job->load('extensions'));
     }
 
     public function edit(Job $job)
     {
         return view('jobs.edit', [
             'job' => $job,
-            'extensions' => Extension::all()->sortBy('model_class'),
+            'extensions' => Extension::all()->sortBy('name'),
         ]);
     }
 

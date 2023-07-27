@@ -8,8 +8,8 @@
 <br>
 <p>Extensions</p>
 <ul>
-    @foreach($job->extensions as $extension)
-    <li>{{ $extension->info->name }}</li>
+    @foreach($job->extensions->sortBy('name') as $extension)
+    <li>{{ $extension->name }}</li>
     @endforeach
 </ul>
 @endsection
