@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\ApiExtension;
+use App\Models\FakeApiExtension;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ExtensionFactory extends Factory
 {
-    public static $api_extensions_cache;
+    public $fake_api_extensions_cache;
 
     /**
      * Define the model's default state.
@@ -19,20 +19,22 @@ class ExtensionFactory extends Factory
      */
     public function definition(): array
     {
-        $api_extension_id = $this->faker->unique()->numberBetween(1, self::getApiExtensions()->count());
-        $api_extension = self::getApiExtensions()->find($api_extension_id);
+        $fake_api_extension_id = $this->faker->unique()->numberBetween(1, $this->fakeApiExtensions()->count());
+        $fake_api_extension = $this->fakeApiExtensions()->find($fake_api_extension_id);
                 
         return [
-            'api_extension_info' => json_encode($api_extension->info_array),
-            'api_extension_id' => $api_extension->id,
+            'api_extension_id' => $fake_api_extension->id,
+            'name' => $fake_api_extension->name,
+            'classname' => $fake_api_extension->classname,
+            'description' => $fake_api_extension->description,
         ];
     }
 
-    public static function getApiExtensions()
+    public function fakeApiExtensions()
     {
-        if( is_null(self::$api_extensions_cache) )
-            self::$api_extensions_cache = ApiExtension::all();
+        if( is_null($this->fake_api_extensions_cache) )
+            $this->fake_api_extensions_cache = FakeApiExtension::all();
 
-        return self::$api_extensions_cache;
+        return $this->fake_api_extensions_cache;
     }
 }

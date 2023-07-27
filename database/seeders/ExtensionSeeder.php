@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\ApiExtension;
 use App\Models\Extension;
+use App\Models\FakeApiExtension;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,8 +14,8 @@ class ExtensionSeeder extends Seeder
      */
     public function run(): void
     {        
-        Extension::factory( 
-            mt_rand(1, ApiExtension::all()->count())
-        )->create();
+        $fake_api_extensions_count = FakeApiExtension::all()->count();
+        
+        Extension::factory( mt_rand(1, $fake_api_extensions_count) )->create();
     }
 }

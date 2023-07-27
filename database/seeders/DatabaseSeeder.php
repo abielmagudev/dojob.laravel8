@@ -22,9 +22,9 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            ApiExtensionSeeder::class,
-            JobSeeder::class,
+            FakeApiExtensionSeeder::class,
             ExtensionSeeder::class,
+            JobSeeder::class,
             ExtensionJobSeeder::class,
             OrderSeeder::class,
         ]);

@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('extensions', function (Blueprint $table) {
-            $table->id();
-            $table->boolean('is_available')->default(true);
-            $table->foreignId('api_extension_id')->unique();
-            $table->text('api_extension_info');
+            $table->unsignedInteger('api_extension_id');
+            $table->string('name');
+            $table->string('classname');
+            $table->text('description');
             $table->timestamps();
-            $table->softDeletes();
+            // $table->softDeletes();
         });
     }
 

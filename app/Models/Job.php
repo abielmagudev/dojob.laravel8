@@ -27,13 +27,13 @@ class Job extends Model
     
     // Relationships
 
+    public function extensions()
+    {
+        return $this->belongsToMany(Extension::class, 'extension_job', 'job_id', 'api_extension_id');
+    }
+
     public function orders()
     {
         return $this->hasMany(Order::class);
-    }
-
-    public function extensions()
-    {
-        return $this->belongsToMany(Extension::class);
     }
 }

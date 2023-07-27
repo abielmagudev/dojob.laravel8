@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('extension_job', function (Blueprint $table) {
-            $table->foreignId('extension_id');
+            $table->foreignId('api_extension_id');
             $table->foreignId('job_id');
             $table->timestamps();
         });

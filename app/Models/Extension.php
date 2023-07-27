@@ -10,27 +10,24 @@ class Extension extends Model
     use HasFactory;
     
     protected $fillable = [
-        'is_available',
-        'api_extension_info',
         'api_extension_id',
+        'name',
+        'classname',
+        'description',
     ];
 
-    // Attributes
+    protected $primaryKey = 'api_extension_id';
 
-    public function getInfoAttribute()
-    {
-        return json_decode($this->api_extension_info);
-    }
-    
 
     // Relations
-    public function api()
-    {
-        return $this->belongsTo(ApiExtension::class, 'api_extension_id');
-    }
 
     public function jobs()
     {
         return $this->belongsToMany(Job::class);
+    }
+
+    public function fakeApi()
+    {
+        return $this->belongsTo(FakeApiExtension::class, 'api_extension_id');
     }
 }
