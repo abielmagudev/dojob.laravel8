@@ -21,6 +21,22 @@ class Extension extends Model
     
     // Attributes
 
+    public function getTheIdAttribute()
+    {
+        return $this->api_extension_id;
+    }
+
+    public function getAcronymNameAttribute()
+    {
+        $words = explode(' ', $this->name);
+
+        $valid_words = array_map(function ($word) {
+            return ctype_alpha($word[0]) ? $word[0] : '';
+        }, $words);
+
+        return implode($valid_words);
+    }
+
     public function getControllerClassAttribute()
     {
         return sprintf('App\\Http\\Controllers\\ApiExtensions\\%sController', $this->classname);
