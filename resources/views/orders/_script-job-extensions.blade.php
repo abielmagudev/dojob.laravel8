@@ -1,3 +1,14 @@
+<?php
+
+$scriptSettings = (object) [
+    'csrf_token' => csrf_token(),
+    'fetch_route' => route('job_extensions'),
+    'url_xjs' => url('assets/xjs'),
+    'request_method' => $method,
+    'extra' => json_encode($extra) ?? json_encode([]),
+];
+
+?>
 <script>
 const selectJob = {
     element: document.getElementById('selectJob'),
@@ -34,15 +45,16 @@ const extensionsContainer = {
             return;
         }
         
-        let domain_xjs = "<?= url('assets/xjs') ?>/";
-
         let templates_cache = [];
         extensions.forEach(function (extension) {
             templates_cache.push(extension.template)
             
             if( extension.script )
             {
-                if( script_exists = document.querySelector(`script[src="${domain_xjs + extension.script}"]`) )
+                let url_xjs = "<?= $scriptSettings->url_xjs ?>/";
+                let script_src = url_xjs + extension.script;
+
+                if( script_exists = document.querySelector(`script[src="${script_src}"]`) )
                     script_exists.remove()
 
                 let script = document.createElement('script')
@@ -58,16 +70,16 @@ const extensionsContainer = {
         this.show()
     },
     request: async function (job_id) {
-        let response = await fetch("<?= route('job_extensions') ?>", {
+        let response = await fetch("<?= $scriptSettings->fetch_route ?>", {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '<?= csrf_token() ?>'
+                'X-CSRF-TOKEN': '<?= $scriptSettings->csrf_token ?>'
             },
             body: JSON.stringify({
                 job: job_id,
-                method: 'create',
-                old: <?= json_encode( request()->old() ) ?>
+                method: '<?= $scriptSettings->request_method ?>',
+                extra: <?= $scriptSettings->extra ?>
             })
         })
 
