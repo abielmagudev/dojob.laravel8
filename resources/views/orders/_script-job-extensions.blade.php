@@ -5,6 +5,7 @@ $scriptSettings = (object) [
     'fetch_route' => route('job_extensions'),
     'url_xjs' => url('assets/xjs'),
     'request_method' => $method,
+    'order_id' => isset($order) ? $order : null,
     'extra' => isset($extra) ? json_encode($extra) : json_encode([]),
 ];
 
@@ -12,7 +13,13 @@ $scriptSettings = (object) [
 <script>
 const selectJob = {
     element: document.getElementById('selectJob'),
+    exists: function () {
+        return this.element != null
+    },
     listen: function () {
+        if(! this.exists() )
+            return;
+
         this.element.addEventListener('change', function () {
             extensionsContainer.reset()
 
@@ -78,6 +85,7 @@ const extensionsContainer = {
             body: JSON.stringify({
                 job: job_id,
                 method: '<?= $scriptSettings->request_method ?>',
+                order: <?= $scriptSettings->order_id ?>,
                 extra: <?= $scriptSettings->extra ?>
             })
         })

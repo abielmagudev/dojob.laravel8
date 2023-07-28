@@ -1,1 +1,4 @@
-<script>document.getElementById('selectJob').dispatchEvent( new Event('change') )</script>
+<script>
+if( selectJob.exists() )
+    selectJob.element.dispatchEvent( new Event('change') )
+</script>
