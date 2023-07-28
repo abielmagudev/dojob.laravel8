@@ -37,7 +37,6 @@
     <button class="btn btn-success" type="submit">Save order</button>
     <a href="{{ route('orders.index') }}" class="btn btn-primary">Cancel</a>
 </form>
-@include('orders._script-extension-loader')
-@includeWhen(old('job'), 'orders._script-extension-loader-trigger')
-
+@include('orders._script-job-extensions')
+@includeWhen(old('job'), 'orders._script-job-extensions-trigger')
 @endsection

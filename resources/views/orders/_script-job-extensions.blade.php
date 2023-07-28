@@ -28,8 +28,11 @@ const extensionsContainer = {
         this.spinner.show()
 
         let extensions = await this.request(job_id);
-        if( extensions.length == 0 )
+        if( extensions == undefined || extensions.length == 0 )
+        {
+            this.spinner.hide()
             return;
+        }
         
         let domain_xjs = "<?= url('assets/xjs') ?>/";
 
@@ -55,11 +58,11 @@ const extensionsContainer = {
         this.show()
     },
     request: async function (job_id) {
-        let response = await fetch("<?= route('extensions.loader') ?>", {
+        let response = await fetch("<?= route('job_extensions') ?>", {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': "<?= csrf_token() ?>"
+                'X-CSRF-TOKEN': '<?= csrf_token() ?>'
             },
             body: JSON.stringify({
                 job: job_id,
