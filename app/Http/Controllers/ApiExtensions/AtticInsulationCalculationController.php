@@ -17,4 +17,11 @@ class AtticInsulationCalculationController extends Controller
             'script' => 'aic.js',
         ];
     }
+
+    public function edit()
+    {
+        return [
+            'template' => '- View edit of extension AtticInsulationCalculation -',
+        ];
+    }
 }
