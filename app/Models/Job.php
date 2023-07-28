@@ -21,7 +21,7 @@ class Job extends Model
 
     public function hasExtensions(): bool
     {
-        return (bool) $this->extensions->count();
+        return (bool) ($this->extensions_count ?? $this->extensions->count());
     }
 
     
