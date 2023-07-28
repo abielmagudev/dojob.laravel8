@@ -5,7 +5,7 @@ $scriptSettings = (object) [
     'fetch_route' => route('job_extensions'),
     'url_xjs' => url('assets/xjs'),
     'request_method' => $method,
-    'extra' => json_encode($extra) ?? json_encode([]),
+    'extra' => isset($extra) ? json_encode($extra) : json_encode([]),
 ];
 
 ?>
@@ -51,14 +51,13 @@ const extensionsContainer = {
             
             if( extension.script )
             {
-                let url_xjs = "<?= $scriptSettings->url_xjs ?>/";
-                let script_src = url_xjs + extension.script;
+                let script_source = "<?= $scriptSettings->url_xjs ?>/" + extension.script;
 
-                if( script_exists = document.querySelector(`script[src="${script_src}"]`) )
+                if( script_exists = document.querySelector(`script[src="${script_source}"]`) )
                     script_exists.remove()
 
                 let script = document.createElement('script')
-                script.src = domain_xjs + extension.script
+                script.src = script_source
                 script.async = true
                 script.defer = true
                 document.body.appendChild(script)
