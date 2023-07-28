@@ -5,7 +5,7 @@ $scriptSettings = (object) [
     'fetch_route' => route('job_extensions'),
     'url_xjs' => url('assets/xjs'),
     'request_method' => $method,
-    'order_id' => isset($order) ? $order : null,
+    'order_id' => isset($order) ? $order : 'null',
     'extra' => isset($extra) ? json_encode($extra) : json_encode([]),
 ];
 
