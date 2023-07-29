@@ -3,7 +3,7 @@
 namespace App\Models\CustomTraits;
 
 trait Existential
-{re
+{
     public function isReal(): bool
     {
         return isset( $this->id );
