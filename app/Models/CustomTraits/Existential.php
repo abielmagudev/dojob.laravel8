@@ -3,7 +3,7 @@
 namespace App\Models\CustomTraits;
 
 trait Existential
-{
+{re
     public function isReal(): bool
     {
         return isset( $this->id );
@@ -26,6 +26,6 @@ trait Existential
 
     public function isEmpty(string $attribute): bool
     {
-        return isset( $this->$attribute ) && empty( $this->$attribute );
+        return empty( $this->$attribute );
     }
 }
