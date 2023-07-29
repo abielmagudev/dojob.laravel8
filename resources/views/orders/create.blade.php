@@ -6,8 +6,8 @@
     <a href="{{ route('orders.index') }}" class="btn btn-primary">Cancel</a>
 </form>
 
-@include('orders._script-job-extensions', ['method' => 'create'])
+@include('orders._script-loader-job-extensions', ['method' => 'create'])
 
-@includeWhen(old('job'), 'orders._script-job-extensions-trigger')
+@include('orders._script-select-job-extensions')
 
 @endsection

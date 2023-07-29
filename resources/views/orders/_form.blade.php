@@ -21,10 +21,11 @@
     <x-error name="job"></x-error>
         
     @else
-    <div class="form-control bg-light">{{ $order->job->name }}</div>
-    <select name="job" id='selectJob' class="d-none">
-        <option value="{{ $order->job_id }}" data-has-extensions="1"></option>
-    </select>
+        <div class="form-control bg-light">{{ $order->job->name }}</div>
+        
+        @if( $order->job->hasExtensions() )
+        <input class="d-none" type="hidden" id='selectJob' name="job" value="{{ $order->job_id }}" data-has-extensions="1">     
+        @endif
 
     @endif
 </div>
@@ -36,6 +37,6 @@
         </div>
         <span>Checking if job has extensions...</span>
     </div>
-    <div id='extensionsContainer' class="alert alert-light d-none" ></div>
+    <div id='jobExtensionsContainer' class="alert alert-light d-none" ></div>
 </div>
 <br>

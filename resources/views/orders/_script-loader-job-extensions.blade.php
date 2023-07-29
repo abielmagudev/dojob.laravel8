@@ -1,38 +1,16 @@
 <?php
-
 $scriptSettings = (object) [
     'csrf_token' => csrf_token(),
     'fetch_route' => route('job_extensions'),
-    'url_xjs' => url('assets/xjs'),
+    'extensionsjs_url' => url('assets/xjs'),
     'request_method' => $method,
     'order_id' => isset($order) ? $order : 'null',
     'extra' => isset($extra) ? json_encode($extra) : json_encode([]),
-];
-
+]; 
 ?>
 <script>
-const selectJob = {
-    element: document.getElementById('selectJob'),
-    exists: function () {
-        return this.element != null
-    },
-    listen: function () {
-        if(! this.exists() )
-            return;
-
-        this.element.addEventListener('change', function () {
-            extensionsContainer.reset()
-
-            let option = this.options[this.selectedIndex]
-
-            if( option.dataset.hasExtensions > 0 )
-                extensionsContainer.add(this.value)
-        })
-    }
-}
-
-const extensionsContainer = {
-    element: document.getElementById('extensionsContainer'),
+const jobExtensionsContainer = {
+    element: document.getElementById('jobExtensionsContainer'),
     spinner: {
         element: document.getElementById('loadingMessage'),
         show: function () {
@@ -58,7 +36,7 @@ const extensionsContainer = {
             
             if( extension.script )
             {
-                let script_source = "<?= $scriptSettings->url_xjs ?>/" + extension.script;
+                let script_source = "<?= $scriptSettings->extensionsjs_url ?>/" + extension.script;
 
                 if( script_exists = document.querySelector(`script[src="${script_source}"]`) )
                     script_exists.remove()
@@ -108,7 +86,4 @@ const extensionsContainer = {
         this.hide()
     }
 }
-
-selectJob.listen()
-
 </script>
