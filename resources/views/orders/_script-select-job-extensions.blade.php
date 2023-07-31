@@ -1,20 +1,19 @@
 <script>
 const selectJob = {
     element: document.getElementById('selectJob'),
-    exists: function () {
-        return this.element != null
-    },
+    route: "<?= route('orders-job-extensions.create', 'id?') ?>",
     listen: function () {
-        if(! this.exists() )
-            return;
+        let route = this.route
 
         this.element.addEventListener('change', function () {
-            jobExtensionsContainer.reset()
-
+            jobExtensions.reset();
+            
             let option = this.options[this.selectedIndex]
 
-            if( option.dataset.hasExtensions > 0 )
-                jobExtensionsContainer.add(this.value)
+            if( option.dataset.hasExtensions > 0 ) {
+                let url = route.replace('id?', this.value)
+                jobExtensions.load(url)
+            }
         })
     }
 }

@@ -27,12 +27,10 @@ class OrderStoreRequest extends FormRequest
             'job' => ['required'],
         ];
 
-        $extra = [];
-
         foreach($this->form_requests as $form_request)
-            array_push($extra, $form_request->rules());
+            $rules = array_merge($rules, $form_request->rules());
 
-        return array_merge($rules, ...$extra);
+        return $rules;
     }
 
     public function messages()
@@ -56,15 +54,8 @@ class OrderStoreRequest extends FormRequest
 
         foreach($job->extensions as $extension)
         {
-            if(! isset($extension->info->classname) )
-                continue;
-
-            $form_request_store = __NAMESPACE__ . '\\ApiExtensions\\' . $extension->info->classname . '\\StoreRequest';
-
-            if(! class_exists($form_request_store) )
-                continue;
-
-            array_push($this->form_requests, (new $form_request_store));
+            $form_request_class = $extension->getFormRequestClass('StoreRequest');
+            array_push($this->form_requests, (new $form_request_class));
         }
     }
 }

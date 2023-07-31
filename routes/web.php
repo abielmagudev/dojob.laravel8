@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\ExtensionController;
 use App\Http\Controllers\JobController;
-use App\Http\Controllers\JobExtensionsController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderJobExtensionsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,4 +21,6 @@ Route::get('/', fn() => view('welcome') );
 Route::resource('extensions', ExtensionController::class);
 Route::resource('jobs', JobController::class);
 Route::resource('orders', OrderController::class);
-Route::post('job-extensions', JobExtensionsController::class)->name('job_extensions');
+
+Route::get('orders-job-extensions/create/{job}', [OrderJobExtensionsController::class, 'create'])->name('orders-job-extensions.create');
+Route::get('orders-job-extensions/edit/{order}', [OrderJobExtensionsController::class, 'edit'])->name('orders-job-extensions.edit');

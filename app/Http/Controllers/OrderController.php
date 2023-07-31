@@ -29,6 +29,7 @@ class OrderController extends Controller
 
         return view('orders.create', [
             'jobs' => Job::withCount('extensions')->orderBy('name')->get(),
+            'order' => new Order,
         ]);
     }
 
