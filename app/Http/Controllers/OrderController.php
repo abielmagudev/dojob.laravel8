@@ -35,7 +35,43 @@ class OrderController extends Controller
 
     public function store(OrderStoreRequest $request)
     {
-        return $request->validated();
+        if(! $order = Order::create($request->validated()) )
+            return back()->with('danger', 'Could not save order, try again');
+
+        if( $request->has('job_extensions_cache') )
+        {
+            if(! $this->storeForExtensions($request, $order) )
+            {
+                $order->delete();
+                return back()->with('danger', 'Could not save order by some extension, try again');
+            }
+        }
+
+        return redirect()->route('orders.index')->with('success', 'Order saved');
+    }
+
+    private function storeForExtensions(Request $request, Order $order)
+    {
+        $failed_save = collect([]);
+
+        foreach($request->job_extensions_cache as $extension)
+        {
+            $prepared = $extension->model_class::prepare($request->validated(), $order);
+            
+            if(! $extension->model_class::create($prepared) )
+                $failed_save->push($extension);
+        }
+
+        if( $failed_save->count() )
+        {
+            $failed_save->each(function ($extension) use ($order) {
+                $extension->model_class::where('order_id', $order->id)->delete();
+            });
+    
+            return false;
+        }
+
+        return true;
     }
 
     public function show(Order $order)

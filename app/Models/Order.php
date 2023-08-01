@@ -14,6 +14,13 @@ class Order extends Model
 
     protected $table = 'orders';
     
+    protected $fillable = [
+        'job_id',
+        'notes',
+        'scheduled_date',
+        'scheduled_time',
+    ];
+    
 
     // Attributes
 
