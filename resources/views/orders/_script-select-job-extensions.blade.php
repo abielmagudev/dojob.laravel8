@@ -15,11 +15,10 @@ const selectJob = {
                 jobExtensions.load(url)
             }
         })
+    },
+    shootChangeEvent: function () {
+        this.element.dispatchEvent( new Event('change') )
     }
 }
 selectJob.listen()
 </script>
-
-@if( old('job') )
-<script>selectJob.element.dispatchEvent( new Event('change') )</script>
-@endif

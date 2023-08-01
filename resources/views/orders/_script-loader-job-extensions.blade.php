@@ -1,5 +1,4 @@
 <script>
-
 const jobExtensions = {
     helpers: {
         extensionsJsUrl: "<?= url('assets/xjs') ?>",

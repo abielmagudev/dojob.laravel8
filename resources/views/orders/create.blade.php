@@ -9,4 +9,8 @@
 @include('orders._script-loader-job-extensions')
 @include('orders._script-select-job-extensions')
 
+@if( old('job') )
+<script>selectJob.shootChangeEvent()</script>
+@endif
+
 @endsection
