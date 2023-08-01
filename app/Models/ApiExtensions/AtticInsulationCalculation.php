@@ -4,6 +4,7 @@ namespace App\Models\ApiExtensions;
 
 use App\Models\ApiExtensions\Kernel\HasGetters;
 use App\Models\ApiExtensions\Kernel\HasMigrationUpdates;
+use App\Models\Order;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,6 +17,15 @@ class AtticInsulationCalculation extends Model
     const PREFIX = 'aic';
 
     protected $table = 'api_extension_attic_insulation_calculation';
+
+    protected $fillable = [
+        'method',
+        'rvalue_name',
+        'rvalue_amount',
+        'square_feets',
+        'bags',
+        'order_id',
+    ];
 
     public static $all_methods_with_rvalues = [
         'airkrete' => [
@@ -91,5 +101,24 @@ class AtticInsulationCalculation extends Model
             return 0;
         
         return ceil( ($square_feets / $rvalue_amount) );
+    }
+
+    public static function prepare(array $inputs, Order $order): array
+    {
+        return [
+            'method' => $inputs[ self::getWithPrefix('method') ],
+            'rvalue_name' => $inputs[ self::getWithPrefix('rvalue') ],
+            'square_feets' => $inputs[ self::getWithPrefix('square_feets') ],
+            'rvalue_amount' => self::getRValueAmount(
+                $inputs[ self::getWithPrefix('method') ],
+                $inputs[ self::getWithPrefix('rvalue') ]
+            ),
+            'bags' => self::calculateBags(
+                $inputs[ self::getWithPrefix('method') ],
+                $inputs[ self::getWithPrefix('rvalue') ],
+                $inputs[ self::getWithPrefix('square_feets') ]
+            ),
+            'order_id' => $order->id
+        ];
     }
 }

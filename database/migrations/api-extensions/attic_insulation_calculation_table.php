@@ -15,11 +15,11 @@ return new class extends Migration
         Schema::create( AtticInsulationCalculation::getTableName(), function (Blueprint $table) {
             $table->id();
             $table->enum('method', AtticInsulationCalculation::getAllMethods());
-            $table->string('r_value_name');
-            $table->decimal('r_value_amount', 7, 2, true);
-            $table->decimal('square_feets_quantity', 8, 2, true);
-            $table->integer('bags_count')->default(0);
-            $table->foreignId('task_id');
+            $table->string('rvalue_name');
+            $table->decimal('rvalue_amount', 7, 2, true);
+            $table->decimal('square_feets', 8, 2, true);
+            $table->integer('bags')->default(0);
+            $table->foreignId('order_id');
             $table->timestamps();
         });
     }
