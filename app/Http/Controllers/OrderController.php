@@ -62,7 +62,7 @@ class OrderController extends Controller
                 $failed_save->push($extension);
         }
 
-        if( $failed_save->count() )
+        if( $failed_save->isNotEmpty() )
         {
             $failed_save->each(function ($extension) use ($order) {
                 $extension->model_class::where('order_id', $order->id)->delete();
