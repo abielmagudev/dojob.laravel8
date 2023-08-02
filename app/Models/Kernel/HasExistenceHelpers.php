@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\CustomTraits;
+namespace App\Models\Kernel;
 
-trait Existential
+trait HasExistenceHelpers
 {
     public function isReal(): bool
     {
