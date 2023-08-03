@@ -8,6 +8,6 @@ trait HasOrderRelation
 {
     public function order()
     {
-        return $this->belongnsTo(Order::class);
+        return $this->belongsTo(Order::class);
     }
 }
