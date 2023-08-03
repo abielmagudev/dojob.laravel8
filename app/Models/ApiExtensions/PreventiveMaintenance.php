@@ -2,7 +2,7 @@
 
 namespace App\Models\ApiExtensions;
 
-use App\Models\ApiExtensions\Kernel\HasGetters;
+use App\Models\ApiExtensions\Kernel\HasHelpers;
 use App\Models\ApiExtensions\Kernel\HasMigrationUpdates;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,10 +10,10 @@ use Illuminate\Database\Eloquent\Model;
 class PreventiveMaintenance extends Model
 {
     use HasFactory;
-    use HasGetters;
+    use HasHelpers;
     use HasMigrationUpdates;
 
-    const PREFIX = 'pm';
+    static $prefix = 'pm';
     
     protected $table = 'api_extension_preventive_maintenance';
 }

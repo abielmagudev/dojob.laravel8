@@ -3,17 +3,17 @@
 namespace App\Models\ApiExtensions;
 
 use App\Models\ApiExtensions\Kernel\HasMigrationUpdates;
-use App\Models\ApiExtensions\Kernel\HasGetters;
+use App\Models\ApiExtensions\Kernel\HasHelpers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class BattInsulationCalculation extends Model
 {
     use HasFactory;
-    use HasGetters;
+    use HasHelpers;
     use HasMigrationUpdates;
 
-    const PREFIX = 'bic';
+    static $prefix = 'bic';
 
     protected $table = 'api_extension_batt_insulation_calculation';
 

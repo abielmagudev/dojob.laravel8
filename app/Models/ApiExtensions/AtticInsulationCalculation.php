@@ -2,7 +2,7 @@
 
 namespace App\Models\ApiExtensions;
 
-use App\Models\ApiExtensions\Kernel\HasGetters;
+use App\Models\ApiExtensions\Kernel\HasHelpers;
 use App\Models\ApiExtensions\Kernel\HasMigrationUpdates;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,10 +11,10 @@ use Illuminate\Database\Eloquent\Model;
 class AtticInsulationCalculation extends Model
 {
     use HasFactory;
-    use HasGetters;
+    use HasHelpers;
     use HasMigrationUpdates;
 
-    const PREFIX = 'aic';
+    static $prefix = 'aic';
 
     protected $table = 'api_extension_attic_insulation_calculation';
 

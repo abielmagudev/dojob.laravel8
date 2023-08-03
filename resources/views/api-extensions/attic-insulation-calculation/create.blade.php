@@ -1,25 +1,25 @@
 <?php
 $controls = (object) [
     'method' => (object) [
-        'id' => $class::getWithPrefix('selectMethod'),
-        'name' => $class::getWithPrefix('method'),
+        'id' => $class::concatPrefix('selectMethod'),
+        'name' => $class::concatPrefix('method'),
     ],
     'rvalue' => (object) [
-        'id' => $class::getWithPrefix('selectRValue'),
-        'name' => $class::getWithPrefix('rvalue'),
+        'id' => $class::concatPrefix('selectRValue'),
+        'name' => $class::concatPrefix('rvalue'),
     ],
     'squarefeets'=> (object) [
-        'id' => $class::getWithPrefix('inputSquareFeets'),
-        'name' => $class::getWithPrefix('square_feets'),
+        'id' => $class::concatPrefix('inputSquareFeets'),
+        'name' => $class::concatPrefix('square_feets'),
     ],
     'bags' => (object) [
-        'id' => $class::getWithPrefix('divBags'),
+        'id' => $class::concatPrefix('divBags'),
     ],
 ];
 ?>
 
 <h5 class="mb-3">Attic Insulation Calculation</h5>
-<div class="row" id="{{ $class::getWithPrefix('atticInsulationCalculationWrapper') }}">
+<div class="row" id="{{ $class::concatPrefix('atticInsulationCalculationWrapper') }}">
     {{-- Methods --}}
     <div class="col-sm">
         <div class="mb-3">
@@ -57,7 +57,7 @@ $controls = (object) [
             <x-error name='{{ $controls->rvalue->name }}'></x-error>
 
             @foreach($class::getAllMethodsWithRValues() as $method => $rvalues)                   
-            <template id='{{ $class::getWithPrefix( "{$method}RValuesOptionsTemplate" ) }}'>
+            <template id='{{ $class::concatPrefix( "{$method}RValuesOptionsTemplate" ) }}'>
                 <option disabled selected label="Choose a R-Value of <?= ucfirst($method) ?>..."></option>
                 @foreach($rvalues as $rvalue_name => $rvalue_amount)
                 <option data-amount="{{ $rvalue_amount }}" value="{{ $rvalue_name }}">{{ $rvalue_name }}</option>
