@@ -15,18 +15,18 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            AtticInsulationCalculation::getWithPrefix('method') => ['required'],
-            AtticInsulationCalculation::getWithPrefix('rvalue') => ['required'],
-            AtticInsulationCalculation::getWithPrefix('square_feets') => ['required'],
+            AtticInsulationCalculation::concatPrefix('method') => ['required'],
+            AtticInsulationCalculation::concatPrefix('rvalue') => ['required'],
+            AtticInsulationCalculation::concatPrefix('square_feets') => ['required'],
         ];
     }
 
     public function messages()
     {
         return [
-            AtticInsulationCalculation::getWithPrefix('method.required') => __('Method is required'),
-            AtticInsulationCalculation::getWithPrefix('rvalue.required') => __('R-Value is required'),
-            AtticInsulationCalculation::getWithPrefix('square_feets.required') => __('Square feets is required'),
+            AtticInsulationCalculation::concatPrefix('method.required') => __('Method is required'),
+            AtticInsulationCalculation::concatPrefix('rvalue.required') => __('R-Value is required'),
+            AtticInsulationCalculation::concatPrefix('square_feets.required') => __('Square feets is required'),
         ];
     }
 }
