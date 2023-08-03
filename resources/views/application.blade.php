@@ -10,6 +10,7 @@
 <body class="bg-light">
     @include('application.navbar')
     <div class="container">
+        @include('application.alert-message')
         @yield('content')
     </div>
     <br>
