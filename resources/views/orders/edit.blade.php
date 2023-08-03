@@ -13,7 +13,9 @@
     </div>
 </div>
 
+@if( $order->job->hasExtensions() )
 @include('orders._script-loader-job-extensions')
 <script>jobExtensions.load("<?= route('orders-job-extensions.edit', $order) ?>")</script>
+@endif
 
 @endsection
