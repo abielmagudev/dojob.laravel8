@@ -4,66 +4,48 @@ namespace App\Http\Requests;
 
 use App\Models\Job;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Order\HasJobExtensionsCache;
+use App\Http\Requests\Order\HasJobExtensionsRequests;
 
 class OrderStoreRequest extends FormRequest
 {
-    public $form_requests = [];
+    use HasJobExtensionsCache;
+    use HasJobExtensionsRequests;
 
     public function authorize()
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
-        $rules = [
+        return $this->mergeExtensionFormRequestRules([
             'scheduled_date' => ['required'],
             'scheduled_time' => ['required'],
             'job' => ['required', sprintf('exists:%s,id', \App\Models\Job::class)],
             'notes' => 'nullable',
-        ];
-
-        foreach($this->form_requests as $form_request)
-            $rules = array_merge($rules, $form_request->rules());
-
-        return $rules;
+        ]);
     }
 
     public function messages()
     {
-        $messages = [
+        return $this->mergeExtensionFormRequestMessages([
             'scheduled_date.required' => __('Date is required'),
             'scheduled_time.required' => __('Time is required'),
             'job.required' => __('Job is required'),
             'job.exists' => __('Job is invalid'),
-        ];
-
-        foreach($this->form_requests as $form_request)
-            $messages = array_merge($messages, $form_request->messages());
-
-        return $messages;
+        ]);
     }
 
     public function prepareForValidation()
     {
-        if(! $job = Job::find($this->job) )
+        $job = Job::find($this->job);
+
+        if( is_null($job) ||! $job->hasExtensions() )
             return;
 
-        foreach($job->extensions as $extension)
-        {
-            $form_request_class = $extension->getFormRequestClass('StoreRequest');
-            array_push($this->form_requests, (new $form_request_class));
-        }
-
-        // Cache the extensions of job, to avoid 2 subsequent queries 
-        $this->merge([
-            'job_extensions_cache' => $job->extensions,
-        ]);
+        $this->loadExtensionFormRequests($job->extensions, 'StoreRequest');
+        $this->cacheExtensions($job->extensions);
     }
 
     public function validated()
@@ -73,14 +55,19 @@ class OrderStoreRequest extends FormRequest
         ]);
     }
 
-    /*
-    // Example of passedValidation, can use replace or merge data...
+    /**
+     * Example of passedValidation, can use replace or merge data...
+     * 
+     * 
+     
+     protected function passedValidation()
+     {
+         $this->merge([
+             'job_id' => $this->job
+         ]);
+     }
 
-    protected function passedValidation()
-    {
-        $this->merge([
-            'job_id' => $this->job
-        ]);
-    }
-    */
+     *
+     * 
+     */
 }
