@@ -106,17 +106,17 @@ class AtticInsulationCalculation extends Model
     public static function prepare(array $inputs, Order $order): array
     {
         return [
-            'method' => $inputs[ self::getWithPrefix('method') ],
-            'rvalue_name' => $inputs[ self::getWithPrefix('rvalue') ],
-            'square_feets' => $inputs[ self::getWithPrefix('square_feets') ],
+            'method' => $inputs[ self::concatPrefix('method') ],
+            'rvalue_name' => $inputs[ self::concatPrefix('rvalue') ],
+            'square_feets' => $inputs[ self::concatPrefix('square_feets') ],
             'rvalue_amount' => self::getRValueAmount(
-                $inputs[ self::getWithPrefix('method') ],
-                $inputs[ self::getWithPrefix('rvalue') ]
+                $inputs[ self::concatPrefix('method') ],
+                $inputs[ self::concatPrefix('rvalue') ]
             ),
             'bags' => self::calculateBags(
-                $inputs[ self::getWithPrefix('method') ],
-                $inputs[ self::getWithPrefix('rvalue') ],
-                $inputs[ self::getWithPrefix('square_feets') ]
+                $inputs[ self::concatPrefix('method') ],
+                $inputs[ self::concatPrefix('rvalue') ],
+                $inputs[ self::concatPrefix('square_feets') ]
             ),
             'order_id' => $order->id
         ];

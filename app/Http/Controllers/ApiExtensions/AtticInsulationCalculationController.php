@@ -21,7 +21,11 @@ class AtticInsulationCalculationController extends Controller
     public function edit(Order $order)
     {
         return [
-            'template' => "- View edit of extension AtticInsulationCalculation - {$order->id}",
+            'template' => view('api-extensions/attic-insulation-calculation/edit', [
+                'class' => AtticInsulationCalculation::class,
+                'data' => AtticInsulationCalculation::where('order_id', $order->id)->first(),
+            ])->render(),
+            'script' => 'aic.js',
         ];
     }
 }
