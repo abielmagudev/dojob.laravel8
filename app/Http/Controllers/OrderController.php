@@ -41,7 +41,7 @@ class OrderController extends Controller
 
         if( $request->has('job_extensions_cache') )
         {
-            $failed_extension = $this->saveForExtensions($request, $order);
+            $failed_extension = $this->storeForExtensions($request, $order);
 
             if( is_object($failed_extension) )
             {
@@ -69,7 +69,7 @@ class OrderController extends Controller
     private function storeForExtensions(Request $request, Order $order)
     {
         $successed_saved = collect([]);
-        
+
         foreach($request->job_extensions_cache as $extension)
         {
             $prepared = $extension->model_class::prepare($request->validated(), $order);
