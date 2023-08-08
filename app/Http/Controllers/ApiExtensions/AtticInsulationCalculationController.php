@@ -23,7 +23,11 @@ class AtticInsulationCalculationController extends Controller
     {
         $prepared = AtticInsulationCalculation::prepareToSave($request->validated(), $order);
         $stored = AtticInsulationCalculation::create($prepared);
-        return $stored ? $stored->id : false;
+
+        return [
+            'id' => $stored->id ?? null,
+            'stored' => is_a($stored, AtticInsulationCalculation::class),
+        ];
     }
 
     public function edit(Order $order)
@@ -39,9 +43,13 @@ class AtticInsulationCalculationController extends Controller
 
     public function update(Request $request, Order $order)
     {
+        $stored = AtticInsulationCalculation::whereOrder($order->id)->first();
         $prepared = AtticInsulationCalculation::prepareToSave($request->validated());
-        $updated = AtticInsulationCalculation::whereOrder($order->id)->update($prepared);
-        return $updated ? $order->id : false;
+        
+        return [
+            'id' => $stored->id ?? null,
+            'updated' => $stored->fill($prepared)->save() === true,
+        ];
     }
 
     public function destroy(Request $request, Order $order)
