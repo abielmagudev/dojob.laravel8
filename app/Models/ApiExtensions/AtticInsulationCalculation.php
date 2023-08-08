@@ -4,6 +4,7 @@ namespace App\Models\ApiExtensions;
 
 use App\Models\ApiExtensions\Kernel\HasHelpers;
 use App\Models\ApiExtensions\Kernel\HasMigrationUpdates;
+use App\Models\ApiExtensions\Kernel\HasOrderRelation;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +14,7 @@ class AtticInsulationCalculation extends Model
     use HasFactory;
     use HasHelpers;
     use HasMigrationUpdates;
+    use HasOrderRelation;
 
     static $prefix = 'aic';
 
@@ -103,22 +105,18 @@ class AtticInsulationCalculation extends Model
         return ceil( ($square_feets / $rvalue_amount) );
     }
 
-    public static function prepare(array $inputs, Order $order): array
+    public static function prepareData(array $inputs): array
     {
+        $input_method = $inputs[ self::concatPrefix('method') ];
+        $input_rvalue = $inputs[ self::concatPrefix('rvalue') ];
+        $input_square_feets = $inputs[ self::concatPrefix('square_feets') ];
+
         return [
-            'method' => $inputs[ self::concatPrefix('method') ],
-            'rvalue_name' => $inputs[ self::concatPrefix('rvalue') ],
-            'square_feets' => $inputs[ self::concatPrefix('square_feets') ],
-            'rvalue_amount' => self::getRValueAmount(
-                $inputs[ self::concatPrefix('method') ],
-                $inputs[ self::concatPrefix('rvalue') ]
-            ),
-            'bags' => self::calculateBags(
-                $inputs[ self::concatPrefix('method') ],
-                $inputs[ self::concatPrefix('rvalue') ],
-                $inputs[ self::concatPrefix('square_feets') ]
-            ),
-            'order_id' => $order->id
+            'method' => $input_method,
+            'rvalue_name' => $input_rvalue,
+            'square_feets' => $input_square_feets,
+            'rvalue_amount' => self::getRValueAmount($input_method, $input_rvalue),
+            'bags' => self::calculateBags($input_method, $input_rvalue, $input_square_feets),
         ];
     }
 }

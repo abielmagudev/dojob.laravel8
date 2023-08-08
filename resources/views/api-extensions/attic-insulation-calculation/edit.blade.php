@@ -80,12 +80,12 @@ $controls = (object) [
         <div class="mb-3">
             <label class="form-label">Bags</label>
             <div class="form-control fw-bold text-center" id='{{ $controls->bags->id }}'>
-                {{ 
+                {{
                     $class::calculateBags( 
                         old($controls->method->name, $data->method), 
                         old($controls->rvalue->name, $data->rvalue_name), 
-                        old($controls->squarefeets->name, $data->square_feets)
-                    )
+                        old($controls->squarefeets->name, $data->square_feets) ?? 0
+                    );
                 }}
             </div>
         </div>
