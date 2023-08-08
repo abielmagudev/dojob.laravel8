@@ -15,8 +15,8 @@ trait HasJobExtensionsRequests
         {
             $form_request_class = $extension->getFormRequestClass($form_request_name);
 
-            if( class_exists($form_request_class) && $formRequest = new $form_request_class )
-                $this->addExtensionFormRequest($formRequest);
+            if( class_exists($form_request_class) )
+                $this->addExtensionFormRequest( new $form_request_class );
         }
     }
 
