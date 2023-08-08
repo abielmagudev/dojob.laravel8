@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\OrderControllerFeatures\ReflashErrorsTrait;
 use App\Http\Requests\OrderStoreRequest;
 use App\Http\Requests\OrderUpdateRequest;
 use App\Models\Job;
 use App\Models\Order;
-use Illuminate\Http\Request;
-
 class OrderController extends Controller
 {
+    use ReflashErrorsTrait;
+
     public function index()
     {
         return view('orders.index', [
@@ -25,8 +26,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        if( session()->has('errors') )
-            session()->reflash();
+        $this->reflashApiExtensionErrors();
 
         return view('orders.create', [
             'jobs' => Job::withCount('extensions')->orderBy('name')->get(),
@@ -37,57 +37,21 @@ class OrderController extends Controller
     public function store(OrderStoreRequest $request)
     {
         if(! $order = Order::create($request->validated()) )
-            return back()->with('danger', 'Could not save order, try again');
+            return back()->with('danger', 'Order not created, try again...');
 
         if( $request->has('job_extensions_cache') )
         {
-            $failed_extension = $this->storeForExtensions($request, $order);
-
-            if( is_object($failed_extension) )
+            $result = app(OrderJobExtensionsController::class)->callAction('store', [$request, $order]);
+            
+            if( isset($result['failed']) )
             {
                 $order->delete();
-                return back()->with('danger', "Could not save order by extension {$failed_extension->name}, try again please...");
+                $extension_names = implode(', ', $result['failed']); 
+                return back()->with('danger', "Order was not created due to extension errors {$extension_names}, try again...");
             }
         }
 
-        return redirect()->route('orders.index')->with('success', 'Order saved');
-    }
-
-    /**
-     * 1. Get job cached extensions from form request  
-     * 2. Prepare the data for each model class of the extension to save
-     * 3. Try to save the data with the job model class
-     * 4. If you save the data in the extension model, it caches the extension
-     * 5. In case the saving of the data in the extension model fails, 
-     *    enter a loop to eliminate the extensions that did save data.
-     * 6. Cache the extension that failed to save the data to return and 
-     *    break the loop to avoid saving the data in the following models of 
-     *    the extensions
-     * 7. Return the cached extension object that failed or return a boolean 
-     *    value of true for successful validation
-     */
-    private function storeForExtensions(Request $request, Order $order)
-    {
-        $successed_saved = collect([]);
-
-        foreach($request->job_extensions_cache as $extension)
-        {
-            $prepared = $extension->model_class::prepare($request->validated(), $order);
-            
-            if(! $extension->model_class::create($prepared) )
-            {
-                $successed_saved->each(function ($extension) use ($order) {
-                    $extension->model_class::where('order_id', $order->id)->delete();
-                });
-
-                $failed_extension = $extension;
-                break;
-            }
-            
-            $successed_saved->push($extension);
-        }
-
-        return isset($failed_extension) ? $failed_extension : true;
+        return redirect()->route('orders.index')->with('success', 'Order was created');
     }
 
     public function show(Order $order)
@@ -97,46 +61,28 @@ class OrderController extends Controller
 
     public function edit(Order $order)
     {
+        $this->reflashApiExtensionErrors();
+
         return view('orders.edit')->with('order', $order);
     }
 
     public function update(OrderUpdateRequest $request, Order $order)
     {
-        if(! $order->fill( $request->validated() )->save() )
-            return back()->with('danger', 'Order cant be updated, try again please...');
-
+        if( $order->fill( $request->validated() )->save() === false )
+            return back()->with('danger', 'Order not updated, try again...');
+    
         if( $request->has('job_extensions_cache') )
         {
-            $updated = $this->updateForExtensions($request, $order);
-
-            if( $updated->failed->isNotEmpty() )
-                return back()->with('danger', "Could not update order complete by first extension fail {$updated->failed->first()->name}, try again please...");
-        }
-    
-        return redirect()->route('orders.edit', $order)->with('success', 'Order updated');
-    }
-
-    private function updateForExtensions(Request $request, Order $order)
-    {
-        $updated = (object) [
-            'successed' => collect([]),
-            'failed' => collect([])
-        ];
-        
-        foreach($request->job_extensions_cache as $extension)
-        {
-            $prepared = $extension->model_class::prepare($request->validated(), $order);
+            $result = app(OrderJobExtensionsController::class)->callAction('update', [$request, $order]);
             
-            if(! $extension->model_class::where('order_id', $order->id)->update($prepared) )
+            if( isset($result['failed']) )
             {
-                $updated->failed->push($extension);
-                continue;
+                $extension_names = implode(', ', $result['failed']); 
+                return back()->with('danger', "Order was updated, except for these extensions {$extension_names}, try again...");
             }
-            
-            $updated->successed->push($extension);
         }
 
-        return $updated;
+        return redirect()->route('orders.edit', $order)->with('success', 'Order was updated');
     }
     
     /**
