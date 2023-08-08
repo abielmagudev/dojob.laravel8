@@ -21,7 +21,7 @@ class Extension extends Model
     
     // Attributes
 
-    public function getTheIdAttribute()
+    public function getApiIdAttribute()
     {
         return $this->api_extension_id;
     }
