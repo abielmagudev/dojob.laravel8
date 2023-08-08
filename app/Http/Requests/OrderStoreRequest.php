@@ -4,8 +4,8 @@ namespace App\Http\Requests;
 
 use App\Models\Job;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Http\Requests\OrderRequestsFeatures\HasJobExtensionsCache;
-use App\Http\Requests\OrderRequestsFeatures\HasJobExtensionsRequests;
+use App\Http\Requests\OrderRequestFeatures\HasJobExtensionsCache;
+use App\Http\Requests\OrderRequestFeatures\HasJobExtensionsRequests;
 
 class OrderStoreRequest extends FormRequest
 {

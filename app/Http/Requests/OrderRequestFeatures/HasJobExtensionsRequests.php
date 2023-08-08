@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\OrderRequestsFeatures;
+namespace App\Http\Requests\OrderRequestFeatures;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Collection;
