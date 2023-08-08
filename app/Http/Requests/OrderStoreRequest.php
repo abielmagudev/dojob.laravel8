@@ -4,8 +4,8 @@ namespace App\Http\Requests;
 
 use App\Models\Job;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Http\Requests\Order\HasJobExtensionsCache;
-use App\Http\Requests\Order\HasJobExtensionsRequests;
+use App\Http\Requests\OrderRequestsFeatures\HasJobExtensionsCache;
+use App\Http\Requests\OrderRequestsFeatures\HasJobExtensionsRequests;
 
 class OrderStoreRequest extends FormRequest
 {
@@ -60,12 +60,26 @@ class OrderStoreRequest extends FormRequest
      * 
      * 
      
-     protected function passedValidation()
-     {
-         $this->merge([
-             'job_id' => $this->job
-         ]);
-     }
+        protected function passedValidation()
+        {
+            $this->merge([
+                'job_id' => $this->job
+            ]);
+        }
+
+     * Example of failedValidation, can use to response with JSON...
+     * 
+     * 
+     
+        protected function failedValidation(Validator $validator)
+        {
+            throw new HttpResponseException(
+                new JsonResponse([
+                    'message' => 'Request failed.',
+                    'errors' => $validator->errors(),
+                ], JsonResponse::HTTP_BAD_REQUEST)
+            );
+        }
 
      *
      * 

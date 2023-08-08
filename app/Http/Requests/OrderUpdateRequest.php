@@ -3,8 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Http\Requests\Order\HasJobExtensionsCache;
-use App\Http\Requests\Order\HasJobExtensionsRequests;
+use App\Http\Requests\OrderRequestsFeatures\HasJobExtensionsCache;
+use App\Http\Requests\OrderRequestsFeatures\HasJobExtensionsRequests;
 
 class OrderUpdateRequest extends FormRequest
 {
