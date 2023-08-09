@@ -21,7 +21,7 @@
             <tr>
                 <td style="width:1%">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="{{ $element_id }}" name="extensions[]" value="{{ $extension->api_id }}" {{ isChecked( $job->extensions->contains('the_id', $extension->the_id) ) }}>
+                        <input class="form-check-input" type="checkbox" id="{{ $element_id }}" name="extensions[]" value="{{ $extension->api_id }}" {{ isChecked( $job->extensions->contains('api_id', $extension->api_id) ) }}>
                     </div>
                 </td>
                 <td>
