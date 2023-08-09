@@ -6,7 +6,7 @@ trait ReflashErrorsTrait
 {
     private function reflashApiExtensionErrors()
     {
-        if( session()->has('errors') )
+        if( session()->has('errors') || session()->has('danger') )
             session()->reflash();
     }
 }
