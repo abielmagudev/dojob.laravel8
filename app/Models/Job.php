@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Kernel\HasExistenceHelpers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Job extends Model
 {
     use HasFactory;
+    use HasExistenceHelpers;
 
     protected $fillable = [
         'name',

@@ -11,7 +11,7 @@
     <label for="inputSuccessfulInspections" class="form-label">Successful inspections required</label>
     <input type="number" step="1" min="0" class="form-control" id="inputSuccessfulInspections" name="successful_inspections_required" value="{{ old('successful_inspections_required', ($job->successful_inspections_required ?? 0)) }}">
 </div>
-@if( is_int($job->id) )
+@if( $job->isReal() )
 <label class="form-label">Extensions</label>
 <div class="table-responsive border mb-3" style="height:256px">
     <table class="table">
@@ -21,7 +21,7 @@
             <tr>
                 <td style="width:1%">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="{{ $element_id }}" name="extensions[]" value="{{ $extension->the_id }}" {{ isChecked( $job->extensions->contains('the_id', $extension->the_id) ) }}>
+                        <input class="form-check-input" type="checkbox" id="{{ $element_id }}" name="extensions[]" value="{{ $extension->api_id }}" {{ isChecked( $job->extensions->contains('the_id', $extension->the_id) ) }}>
                     </div>
                 </td>
                 <td>
