@@ -16,13 +16,6 @@ class OrderJobExtensionsController extends Controller
         });
     }
 
-    public function create(Job $job)
-    {
-        return response()->json([
-            'templates' => $this->call($job->extensions, 'create')
-        ]);
-    }
-
     public function store(Request $request, $order)
     {
         $extensions = $request->get('job_extensions_cache', $order->job->extensions);
@@ -34,13 +27,6 @@ class OrderJobExtensionsController extends Controller
         }, true);   
     }
 
-    public function edit(Order $order)
-    {
-        return response()->json([
-            'templates' => $this->call($order->job->extensions, 'edit', ['order' => $order])
-        ]);
-    }
-
     public function update(Request $request, Order $order)
     {
         $extensions = $request->get('job_extensions_cache', $order->job->extensions);
@@ -50,5 +36,19 @@ class OrderJobExtensionsController extends Controller
         return $result->groupBy( function ($item) {
             return $item['updated'] ? 'success' : 'failed';
         }, true);   
+    }
+
+    public function ajaxCreate(Job $job)
+    {
+        return response()->json([
+            'templates' => $this->call($job->extensions, 'create')
+        ]);
+    }
+
+    public function ajaxEdit(Order $order)
+    {
+        return response()->json([
+            'templates' => $this->call($order->job->extensions, 'edit', ['order' => $order])
+        ]);
     }
 }
