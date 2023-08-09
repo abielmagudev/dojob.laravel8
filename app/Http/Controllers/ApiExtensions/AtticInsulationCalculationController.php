@@ -11,10 +11,12 @@ class AtticInsulationCalculationController extends Controller
 {
     public function create()
     {
+        $template_rendered = view('api-extensions/attic-insulation-calculation/create', [
+            'class' => AtticInsulationCalculation::class,
+        ])->render();
+
         return [
-            'template' => view('api-extensions/attic-insulation-calculation/create', [
-                'class' => AtticInsulationCalculation::class,
-            ])->render(),
+            'template' => $template_rendered,
             'script' => 'aic.js',
         ];
     }
@@ -52,8 +54,8 @@ class AtticInsulationCalculationController extends Controller
         ];
     }
 
-    public function destroy(Request $request, Order $order)
+    public function destroy(Order $order, Request $request = null)
     {
-
+        return AtticInsulationCalculation::whereOrder($order->id)->delete();
     }
 }
