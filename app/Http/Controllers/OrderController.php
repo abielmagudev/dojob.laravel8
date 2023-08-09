@@ -42,12 +42,24 @@ class OrderController extends Controller
         if( $request->has('job_extensions_cache') )
         {
             $result = app(OrderJobExtensionsController::class)->callAction('store', [$request, $order]);
-            
-            if( isset($result['failed']) )
+             
+            if( $result->has('failed') )
             {
+                // Delete all data of extensions success stored for reset
+                $result->get('success')->map(function ($item, $key) use ($request, $order) {
+                    $extension = $request->job_extensions_cache->get($key);
+                    app($extension->controller_class)->callAction('destroy', [$order]);
+                });
+
+                $extension_failed_names = $result->get('failed')->map(function ($item, $key) use ($request) {
+                    return $request->job_extensions_cache->get($key)->name;
+                });
+
+                $failed_names = $extension_failed_names->implode(',');
+
                 $order->delete();
-                $extension_names = implode(', ', $result['failed']); 
-                return back()->with('danger', "Order was not created due to extension errors {$extension_names}, try again...");
+
+                return back()->withInput($request->all())->with('danger', "Order was not created due to extension errors {$failed_names}, try again...");
             }
         }
 
