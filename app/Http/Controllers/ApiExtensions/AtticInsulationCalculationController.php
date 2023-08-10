@@ -24,6 +24,7 @@ class AtticInsulationCalculationController extends Controller
     public function store(Request $request, Order $order)
     {
         $prepared = AtticInsulationCalculation::prepareToSave($request->validated(), $order);
+        
         $stored = AtticInsulationCalculation::create($prepared);
 
         return [
@@ -34,28 +35,36 @@ class AtticInsulationCalculationController extends Controller
 
     public function edit(Order $order)
     {
+        $template_rendered = view('api-extensions/attic-insulation-calculation/edit', [
+            'class' => AtticInsulationCalculation::class,
+            'data' => AtticInsulationCalculation::where('order_id', $order->id)->first(),
+        ])->render();
+
         return [
-            'template' => view('api-extensions/attic-insulation-calculation/edit', [
-                'class' => AtticInsulationCalculation::class,
-                'data' => AtticInsulationCalculation::where('order_id', $order->id)->first(),
-            ])->render(),
+            'template' => $template_rendered,
             'script' => 'aic.js',
         ];
     }
 
     public function update(Request $request, Order $order)
     {
-        $stored = AtticInsulationCalculation::whereOrder($order->id)->first();
         $prepared = AtticInsulationCalculation::prepareToSave($request->validated());
         
+        $record = AtticInsulationCalculation::whereOrder($order->id)->first();
+        
         return [
-            'id' => $stored->id ?? null,
-            'updated' => $stored->fill($prepared)->save() === true,
+            'id' => $record->id ?? null,
+            'updated' => $record->fill($prepared)->save() === true,
         ];
     }
 
-    public function destroy(Order $order, Request $request = null)
+    public function destroy(Request $request, Order $order)
     {
-        return AtticInsulationCalculation::whereOrder($order->id)->delete();
+        $record = AtticInsulationCalculation::whereOrder($order->id)->first();
+
+        return [
+            'id' => $record->id ?? null,
+            'destroyed' => (bool) $record->delete()
+        ];
     }
 }
