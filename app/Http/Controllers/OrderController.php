@@ -99,6 +99,18 @@ class OrderController extends Controller
 
     public function destroy(Request $request, Order $order)
     {
+        if(! $order->delete() )
+            return back()->with('danger', 'Order not deleted, try again...');
         
+        if( $order->job->hasExtensions() )
+        {            
+            app(OrderJobExtensionsController::class)->callAction('destroy', [
+                $request, 
+                $order, 
+                $order->job->extensions
+            ]);
+        }
+
+        return redirect()->route('orders.index')->with('success', "Order #{$order->id} - {$order->job->name} was deleted");
     }
 }
