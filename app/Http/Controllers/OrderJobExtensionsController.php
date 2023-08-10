@@ -11,44 +11,66 @@ class OrderJobExtensionsController extends Controller
 {
     private function call(Collection $extensions, string $method, array $parameters = [])
     {
-        return $extensions->map(function ($extension) use ($method, $parameters) {
-            return app($extension->controller_class)->callAction($method, $parameters);
+        $result = $extensions->map(function ($extension) use ($method, $parameters) {
+            $extension->called = null;
+
+            if( method_exists($extension->controller_class, $method) )
+                $extension->called = app($extension->controller_class)->callAction($method, $parameters);
+            
+            return $extension;
         });
-    }
 
-    public function store(Request $request, $order)
-    {
-        $extensions = $request->get('job_extensions_cache', $order->job->extensions);
-        
-        $result = $this->call($extensions, 'store', [$request, $order]);
-        
-        return $result->groupBy( function ($item) {
-            return $item['stored'] ? 'success' : 'failed';
-        }, true);   
-    }
-
-    public function update(Request $request, Order $order)
-    {
-        $extensions = $request->get('job_extensions_cache', $order->job->extensions);
-        
-        $result = $this->call($extensions, 'update', [$request, $order]);
-
-        return $result->groupBy( function ($item) {
-            return $item['updated'] ? 'success' : 'failed';
-        }, true);   
+        return $result->filter(function ($extension) {
+            return $extension->called <> null;
+        });
     }
 
     public function ajaxCreate(Job $job)
     {
+        $result = $this->call($job->extensions, 'create');
+
         return response()->json([
-            'templates' => $this->call($job->extensions, 'create')
+            'templates' => $result->map(function ($extension) {
+                return $extension->called;
+            })
         ]);
+    }
+
+    public function store(Request $request, Order $order, Collection $extensions)
+    {        
+        $result = $this->call($extensions, 'store', [$request, $order]);
+
+        return $result->groupBy( function ($extension) {
+            return $extension->called['stored'] ? 'success' : 'failed';
+        });   
     }
 
     public function ajaxEdit(Order $order)
     {
+        $result = $this->call($order->job->extensions, 'edit', ['order' => $order]);
+
         return response()->json([
-            'templates' => $this->call($order->job->extensions, 'edit', ['order' => $order])
+            'templates' => $result->map(function ($extension) {
+                return $extension->called;
+            })
         ]);
+    }
+
+    public function update(Request $request, Order $order, Collection $extensions)
+    {        
+        $result = $this->call($extensions, 'update', [$request, $order]);
+
+        return $result->groupBy( function ($extension) {
+            return $extension->called['updated'] ? 'success' : 'failed';
+        }); 
+    }
+
+    public function destroy(Request $request, Order $order, Collection $extensions)
+    {
+        $result = $this->call($extensions, 'destroy', [$request, $order]);
+
+        return $result->groupBy( function ($extension) {
+            return $extension->called['destroyed'] ? 'success' : 'failed';
+        }); 
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Requests\OrderStoreRequest;
 use App\Http\Requests\OrderUpdateRequest;
 use App\Models\Job;
 use App\Models\Order;
+use Illuminate\Http\Request;
 class OrderController extends Controller
 {
     use ReflashErrorsTrait;
@@ -18,12 +19,6 @@ class OrderController extends Controller
         ]);
     }
 
-    /**
-     * 1) Keeps the previous values for the views of the extensions 
-     * of the selected job, when the save failed the validation
-     * 
-     * 2) Return the view create with available jobs
-     */
     public function create()
     {
         $this->reflashApiExtensionErrors();
@@ -40,26 +35,28 @@ class OrderController extends Controller
             return back()->with('danger', 'Order not created, try again...');
 
         if( $request->has('job_extensions_cache') )
-        {
-            $result = app(OrderJobExtensionsController::class)->callAction('store', [$request, $order]);
-             
+        {            
+            $result = app(OrderJobExtensionsController::class)->callAction('store', [
+                $request, 
+                $order, 
+                $request->get('job_extensions_cache')
+            ]);
+                         
             if( $result->has('failed') )
             {
-                // Delete all data of extensions success stored for reset
-                $result->get('success')->map(function ($item, $key) use ($request, $order) {
-                    $extension = $request->job_extensions_cache->get($key);
-                    app($extension->controller_class)->callAction('destroy', [$order]);
-                });
-
-                $extension_failed_names = $result->get('failed')->map(function ($item, $key) use ($request) {
-                    return $request->job_extensions_cache->get($key)->name;
-                });
-
-                $failed_names = $extension_failed_names->implode(',');
+                app(OrderJobExtensionsController::class)->callAction('destroy', [
+                    $request, 
+                    $order, 
+                    $result->get('success')
+                ]);
 
                 $order->delete();
 
-                return back()->withInput($request->all())->with('danger', "Order was not created due to extension errors {$failed_names}, try again...");
+                $extension_failed_names = $result->get('failed')->map(function ($extension) {
+                    return $extension->name;
+                })->implode(',');
+
+                return back()->withInput($request->all())->with('danger', "Order was not created due to extension errors {$extension_failed_names}, try again...");
             }
         }
 
@@ -85,23 +82,23 @@ class OrderController extends Controller
     
         if( $request->has('job_extensions_cache') )
         {
-            $result = app(OrderJobExtensionsController::class)->callAction('update', [$request, $order]);
+            $result = app(OrderJobExtensionsController::class)->callAction('update', [$request, $order, $request->get('job_extensions_cache')]);
             
-            if( isset($result['failed']) )
+            if( $result->has('failed') )
             {
-                $extension_names = implode(', ', $result['failed']); 
-                return back()->with('danger', "Order was updated, except for these extensions {$extension_names}, try again...");
+                $extension_failed_names = $result->get('failed')->map(function ($extension) {
+                    return $extension->name;
+                })->implode(',');
+            
+                return back()->with('danger', "Order was updated, except for these extensions {$extension_failed_names}, try again...");
             }
         }
 
         return redirect()->route('orders.edit', $order)->with('success', 'Order was updated');
     }
-    
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Order $order)
+
+    public function destroy(Request $request, Order $order)
     {
-        //
+        
     }
 }
