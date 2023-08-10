@@ -64,7 +64,7 @@ class AtticInsulationCalculationController extends Controller
 
         return [
             'id' => $record->id ?? null,
-            'destroyed' => (bool) $record->delete()
+            'destroyed' => (bool) $record->delete() ?? false
         ];
     }
 }
