@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\OrderControllerFeatures\ReflashErrorsTrait;
+use App\Http\Controllers\OrderController\ReflashErrorsTrait;
 use App\Http\Requests\OrderStoreRequest;
 use App\Http\Requests\OrderUpdateRequest;
 use App\Models\Job;

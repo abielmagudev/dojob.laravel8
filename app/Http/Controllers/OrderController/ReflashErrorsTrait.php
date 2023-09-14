@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\OrderControllerFeatures;
+namespace App\Http\Controllers\OrderController;
 
 /**
  * Reflashes the request validation errors('errors') or error message('danger')
