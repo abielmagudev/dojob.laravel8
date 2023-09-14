@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-primary text-white">
+<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
   <div class="container">
     <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,7 +18,7 @@
       </ul>
       <form class="d-flex" role="search">
         <div class="input-group">
-          <input type="search" class="form-control" placeholder="By name, address, phone...">
+          <input type="search" class="form-control bg-white text-dark" placeholder="By name, address, phone...">
           <button class="btn btn-primary" type="button" id="button-addon2">Search</button>
         </div>
       </form>
