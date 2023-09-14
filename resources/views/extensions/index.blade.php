@@ -19,38 +19,42 @@
                 </tr>
                 </thead>
                 <tbody>
-                    @foreach($api_extensions as $api_extension)             
+                    @foreach($apiExtensions as $apiExtension)             
                     <tr>
-    
                         <td>
-                            <p class='mb-0'>{{ $api_extension->name }}</p>
-                            <small class='text-muted'>{{ $api_extension->description }}</small>
+                            <p class='mb-0'>{{ $apiExtension->name }}</p>
+                            <small class='text-muted'>{{ $apiExtension->description }}</small>
                         </td>
                         <td>
-                        @foreach($api_extension->tags_array as $tag)
+                        @foreach($apiExtension->tags_array as $tag)
                             <a href="{{ route('extensions.index', ['tags' => $tag]) }}" class="badge rounded-pill text-bg-dark">{{ $tag }}</a>
                         @endforeach
                         </td>
                         <td class='text-end'>
-                            @if( $extensions->contains('api_extension_id', '=', $api_extension->id) )
-                            <span class="btn btn-secondary w-100 disabled">Installed</span>
+                            @if( $extensions->contains('api_extension_id', '=', $apiExtension->id) )
+                            <form action="{{ route('extensions.destroy', $apiExtension->id) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button class="btn btn-outline-danger w-100" type="submit">Uninstall</button>
+                            </form>
                             
                             @else
-                            <button class="btn btn-outline-success w-100" type="submit" form="formInstallExtension" name="extension" value="{{ $api_extension->id }}">Install</button>
+                            <button class="btn btn-outline-success w-100" type="submit" form="formInstallExtension" name="extension" value="{{ $apiExtension->id }}">Install</button>
     
                             @endif
                         </td>
     
+                        
                         <?php /*
-                        <td>${{ $api_extension->price }}</td>
+                        <td>${{ $apiExtension->price }}</td>
                         <td class="text-end">
-                            @if( $extensions->contains('api_extension_id', '=', $api_extension->id) )
+                            @if( $extensions->contains('apiExtension_id', '=', $apiExtension->id) )
                             <span class="btn btn-outline-secondary btn-sm disabled w-100">Got it</span>
     
-                            @elseif( $api_extension->price <= 0 )
+                            @elseif( $apiExtension->price <= 0 )
                             <button class="btn btn-outline-success btn-sm w-100">It's free!</button>
                             
-                            @elseif( $api_extension->free_try )
+                            @elseif( $apiExtension->free_try )
                             <button class="btn btn-outline-success btn-sm w-100">Free try</button>
     
                             @else
@@ -60,6 +64,8 @@
     
                         </td>
                         */ ?>
+
+
                     </tr>
                     @endforeach
                 </tbody>

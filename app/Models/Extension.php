@@ -37,17 +37,17 @@ class Extension extends Model
         return implode($initials_name);
     }
 
-    public function getControllerClassAttribute()
+    public function getControllerAttribute()
     {
         return sprintf('App\\Http\\Controllers\\ApiExtensions\\%sController', $this->classname);
     }
 
-    public function getModelClassAttribute()
+    public function getModelAttribute()
     {
         return sprintf('%s\\ApiExtensions\\%s', __NAMESPACE__, $this->classname);
     }
 
-    public function getFormRequestClass(string $form_request_name)
+    public function getFormRequest(string $form_request_name)
     {
         return sprintf('App\\Http\\Requests\\ApiExtensions\\%s\\%s', $this->classname, $form_request_name);
     }
@@ -60,8 +60,43 @@ class Extension extends Model
         return $this->belongsToMany(Job::class);
     }
 
-    public function fakeApi()
+
+    // Getters
+
+    public static function prepareToCreate(object $apiExtension)
     {
-        return $this->belongsTo(FakeApiExtension::class, 'api_extension_id');
+        return [
+            'api_extension_id' => $apiExtension->id,
+            'name' => $apiExtension->name,
+            'classname' => $apiExtension->classname,
+            'description' => $apiExtension->description,
+        ];
+    }
+
+    public static function install(object $apiExtension)
+    {
+        $data = self::prepareToCreate( $apiExtension );
+
+        if(! $extension = self::create($data) )
+        {
+            return false;
+        }
+        
+        $extension->model::install();
+
+        if(! $extension->model::installed() )
+        {
+            $extension->delete();
+            return false;
+        }
+
+        return $extension;
+    }
+
+    public static function uninstall(Extension $extension)
+    {
+        $extension->model::uninstall();
+
+        return $extension->model::uninstalled();
     }
 }

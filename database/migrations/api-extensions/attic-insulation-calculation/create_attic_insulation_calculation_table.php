@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create( AtticInsulationCalculation::getTableName(), function (Blueprint $table) {
+        Schema::create(AtticInsulationCalculation::getTableName(), function (Blueprint $table) {
             $table->id();
             $table->enum('method', AtticInsulationCalculation::getAllMethods());
             $table->string('rvalue_name');
@@ -29,6 +29,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists( AtticInsulationCalculation::getTableName());
+        Schema::dropIfExists(
+            AtticInsulationCalculation::getTableName()
+        );
     }
 };

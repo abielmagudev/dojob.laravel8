@@ -11,27 +11,17 @@ class ExtensionController extends Controller
     public function index(Request $request)
     {
         return view('extensions.index', [
-            'api_extensions' => $request->has('tags') ? FakeApiExtension::hasTags($request->tags)->get() : FakeApiExtension::all(),
+            'apiExtensions' => $request->has('tags') ? FakeApiExtension::hasTags($request->tags)->get() : FakeApiExtension::all(),
             'extensions' => Extension::all(),
             'tags' => $request->get('tags', ''),
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $fake_api_extension = FakeApiExtension::find( $request->extension );
+        $fakeApiExtension = FakeApiExtension::find( $request->extension );
 
-        if(! 
-            $extension = Extension::create([
-                'api_extension_id' => $fake_api_extension->id,
-                'name' => $fake_api_extension->name, 
-                'classname' => $fake_api_extension->classname, 
-                'description' => $fake_api_extension->description, 
-            ])
-         )
+        if(! $extension = Extension::install( $fakeApiExtension ) )
             return back()->with('danger', 'Error installing the extension, please try again');
 
         return redirect()->route('extensions.index')->with('success',
@@ -52,6 +42,9 @@ class ExtensionController extends Controller
      */
     public function destroy(Extension $extension)
     {
-        //
+        if(! Extension::uninstall($extension) ||! $extension->delete() )
+            return back()->with('danger', 'Error to uninstall the extension');
+
+        return redirect()->route('extensions.index')->with('success', "Extension {$extension->name} uninstalled");
     }
 }

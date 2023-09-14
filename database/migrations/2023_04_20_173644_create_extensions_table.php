@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('extensions', function (Blueprint $table) {
-            $table->unsignedInteger('api_extension_id');
-            $table->string('name');
-            $table->string('classname');
+            $table->unsignedInteger('api_extension_id')->unique();
+            $table->string('name')->unique();
+            $table->string('classname')->unique();
             $table->text('description');
             $table->timestamps();
             // $table->softDeletes();

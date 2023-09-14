@@ -2,19 +2,19 @@
 
 namespace App\Models\ApiExtensions;
 
-use App\Models\ApiExtensions\Kernel\HasHelpers;
-use App\Models\ApiExtensions\Kernel\HasMigrationUpdates;
-use App\Models\ApiExtensions\Kernel\HasOrderRelation;
-use App\Models\Order;
+use App\Models\ApiExtensions\Kernel\HasMigrationHandler;
+use App\Models\ApiExtensions\Kernel\HasOrderRelationship;
+use App\Models\ApiExtensions\Kernel\HasReflectionHimself;
+use App\Models\ApiExtensions\Kernel\Migratable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AtticInsulationCalculation extends Model
+class AtticInsulationCalculation extends Model implements Migratable
 {
     use HasFactory;
-    use HasHelpers;
-    use HasMigrationUpdates;
-    use HasOrderRelation;
+    use HasMigrationHandler;
+    use HasOrderRelationship;
+    use HasReflectionHimself;
 
     static $prefix = 'aic';
 
@@ -117,6 +117,16 @@ class AtticInsulationCalculation extends Model
             'square_feets' => $input_square_feets,
             'rvalue_amount' => self::getRValueAmount($input_method, $input_rvalue),
             'bags' => self::calculateBags($input_method, $input_rvalue, $input_square_feets),
+        ];
+    }
+
+
+    // Migratable
+
+    public static function migrations(): array
+    {
+        return [
+            'api_extension_attic_insulation_calculation' => 'attic-insulation-calculation/create_attic_insulation_calculation_table.php',
         ];
     }
 }

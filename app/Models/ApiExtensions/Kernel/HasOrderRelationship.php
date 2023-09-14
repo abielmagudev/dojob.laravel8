@@ -4,7 +4,7 @@ namespace App\Models\ApiExtensions\Kernel;
 
 use App\Models\Order;
 
-trait HasOrderRelation
+trait HasOrderRelationship
 {
     public function scopeWhereOrder($query, $id)
     {
