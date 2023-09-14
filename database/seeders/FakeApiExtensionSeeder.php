@@ -13,69 +13,54 @@ class FakeApiExtensionSeeder extends Seeder
      */
     public function run(): void
     {
-        FakeApiExtension::factory( self::seedsCount() )->create();
+        FakeApiExtension::insert( self::stock() );
     }
 
-    public static function seeds(): array
+    public static function stock()
     {
         return [
             [
                 'name' => 'Air Conditioning Installation',
                 'classname' => 'AirConditioningInstallation',
                 'description' => 'Air conditioning installation description.',
+                'tags_csv_format' => 'ac,cooling,freezer',
+                'price' => '300',
             ],
             [
                 'name' => 'Attic Insulation Calculation',
                 'classname' => 'AtticInsulationCalculation',
                 'description' => 'Attic Insulation Calculation description.',
+                'tags_csv_format' => 'insulation,wheaterization,uphouse',
+                'price' => '100',
             ],
             [
                 'name' => 'Batt Insulation Calculation',
                 'classname' => 'BattInsulationCalculation',
                 'description' => 'Batt insulation calculation description.',
+                'tags_csv_format' => 'insulation,wheaterization,underfloor',
+                'price' => '55.50',
             ],
             [
                 'name' => 'Minisplit Installation',
                 'classname' => 'MinisplitInstallation',
                 'description' => 'Minisplit installation description.',
+                'tags_csv_format' => 'ac,cooling',
+                'price' => '275.50',
             ],
             [
                 'name' => 'Preventive Maintenance',
                 'classname' => 'PreventiveMaintenance',
                 'description' => 'Preventive maintenance description.',
+                'tags_csv_format' => 'maintenance,prevent a problem',
+                'price' => '30',
             ],
             [
                 'name' => 'Wall Insulation Calculation',
                 'classname' => 'WallInsulationCalculation',
                 'description' => 'Wall insulation calculation description.',
+                'tags_csv_format' => 'insulation,wheaterization,out house,in house',
+                'price' => '120',
             ],
-
-            // ...
         ];
-    }
-
-    public static function seedsCount(): int
-    {
-        return count( self::seeds() );
-    }
-
-    public static function tags(): array
-    {
-        return [
-            'carpenter',
-            'cooling',
-            'heater',
-            'inspection',
-            'insulation',
-            'maintenance', 
-            'painting', 
-            'testing',
-            'weatherization', 
-        ];
-    }
-
-    public static function tagsCount(): int
-    {
-        return count( self::tags() );
     }
 }

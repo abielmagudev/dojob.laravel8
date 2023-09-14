@@ -23,9 +23,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             FakeApiExtensionSeeder::class,
-            ExtensionSeeder::class,
             JobSeeder::class,
-            ExtensionJobSeeder::class,
             OrderSeeder::class,
         ]);
 
