@@ -9,10 +9,10 @@
     'warning',
 ] ?>
 
-@foreach($colors as $message_color)
-    @if( session()->has($message_color) )
-    <x-alert color="{{ $message_color }}" close>
-        {{ session()->get($message_color) }}
+@foreach($colors as $status)
+    @if( session()->has($status) )
+    <x-alert color="{{ $status }}" close>
+        {!! session()->get($status) !!}
     </x-alert>
     @endif
 @endforeach
