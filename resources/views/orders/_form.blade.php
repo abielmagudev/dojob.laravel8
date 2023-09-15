@@ -1,4 +1,3 @@
-@csrf
 <div class="mb-3">
     <label for="inputScheduleDate" class="form-label">Schedule</label>
     <div class="row">
@@ -48,4 +47,5 @@
     <label for="textareaNotes" class="form-label">Notes</label>
     <textarea name="notes" id="textareaNotes" rows="3" class="form-control">{{ old('notes', $order->notes) }}</textarea>
 </div>
-<br>
+
+@csrf

@@ -3,6 +3,7 @@
 <x-card>
     <form action="{{ route('orders.store') }}" method="post">
         @include('orders._form')
+        <br>
         <div class="text-end">
             <button class="btn btn-success" type="submit">Save order</button>
             <a href="{{ route('orders.index') }}" class="btn btn-primary">Cancel</a>

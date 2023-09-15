@@ -4,6 +4,7 @@
     <form action="{{ route('orders.update', $order) }}" method="post">
         @include('orders._form')
         @method('patch')
+        <br>
         <div class="text-end">
             <button class="btn btn-warning" type="submit">Update order</button>
             <a href="{{ route('orders.index') }}" class="btn btn-primary">Back</a>
