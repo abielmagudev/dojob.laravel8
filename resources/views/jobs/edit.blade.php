@@ -11,4 +11,10 @@
         </div>
     </form>
 </x-card>
+<br>
+
+<x-custom.modal-confirm-delete :route="route('jobs.destroy', $job)" name="job">
+    <p>¿Do you want to continue to delete the job <br> <b><?= $job->name ?></b>?</p>
+</x-custom.modal-confirm-delete>
+
 @endsection

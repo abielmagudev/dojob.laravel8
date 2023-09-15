@@ -10,7 +10,11 @@ class JobController extends Controller
 {
     public function index()
     {
-        return view('jobs.index')->with('jobs', Job::withCount(['extensions','orders'])->orderBy('name')->get());
+        return view('jobs.index')->with('jobs', 
+            Job::withCount(['extensions','orders'])
+            ->orderBy('name')
+            ->get()
+        );
     }
 
     public function create()
@@ -21,9 +25,9 @@ class JobController extends Controller
     public function store(Request $request)
     {
         if(! $job = Job::create($request->all()) )
-            return back()->with('danger', 'Job was not created, try again...');
+            return back()->with('danger', 'Job was not created, please try again');
 
-        return redirect()->route('jobs.index')->with('success', "Job {$job->name} created");
+        return redirect()->route('jobs.index')->with('success', "Job <b>{$job->name}</b> created");
     }
 
     public function show(Job $job)
@@ -34,22 +38,26 @@ class JobController extends Controller
     public function edit(Job $job)
     {
         return view('jobs.edit', [
-            'job' => $job,
             'extensions' => Extension::all()->sortBy('name'),
+            'job' => $job,
         ]);
     }
 
     public function update(Request $request, Job $job)
     {
-        $job->fill($request->all())->save();
+        if(! $job->fill($request->all())->save() )
+            return back()->with('danger', 'Job was not updated, please try again'); 
 
         $job->extensions()->sync($request->get('extensions', []));
 
-        return redirect()->route('jobs.edit', $job)->with('success', 'Job updated');
+        return redirect()->route('jobs.edit', $job)->with('success', "Job <b>{$job->name}</b> updated");
     }
 
     public function destroy(Job $job)
     {
-        //
+        if(! $job->delete() )
+            return back()->with('danger', 'Job was not deleted, please try again');
+
+        return redirect()->route('jobs.index')->with('success', "Job <b>{$job->name}</b> deleted");
     }
 }

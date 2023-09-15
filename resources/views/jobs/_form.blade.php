@@ -14,12 +14,12 @@
 @if( $job->isReal() )
 <label class="form-label">Extensions</label>
 <div class="table-responsive border mb-3" style="height:256px">
-    <table class="table">
+    <table class="table table-hover">
         <tbody>
             @foreach($extensions as $extension)
             <?php $element_id = "extension{$extension->initials_name }" ?>
             <tr>
-                <td style="width:1%">
+                <td class="pe-0" style="width:1%">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="{{ $element_id }}" name="extensions[]" value="{{ $extension->api_id }}" {{ isChecked( $job->extensions->contains('api_id', $extension->api_id) ) }}>
                     </div>
