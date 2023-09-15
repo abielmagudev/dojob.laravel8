@@ -1,34 +1,30 @@
-<?php $settings = (object) [
-    'id' => $id,
-    'title' => $title ?? '',
-    'footer_content' => isset($footerContent) ? $footerContent : false,
-    'footer_close_class' => isset($footerCloseClass) ? $footerCloseClass : 'btn btn-secondary',
-    'footer_close_text' => isset($footerCloseText) ? $footerCloseText : false,
-    'header_close' => isset($headerClose),
-]; ?>
-
-<div class="modal fade" id="<?= $settings->id ?>" tabindex="-1" aria-labelledby="<?= $settings->id ?>Label" aria-hidden="true">
+<div class="modal fade" id="{{ $attributes->get('id') }}" tabindex="-1" aria-labelledby="{{ $attributes->get('id') }}Label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="<?= $settings->id ?>Label">{{ $settings->title }}</h1>
-                @if( $settings->header_close )     
+
+            <div class="modal-header {{ $attributes->get('header-class', '') }}">
+                <h1 class="modal-title fs-5" id="{{ $attributes->get('id') }}Label">{{ $attributes->get('title') }}</h1>
+                @if( $attributes->has('header-close') )     
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 @endif
             </div>
-            <div class="modal-body">
+
+            <div class="modal-body {{ $attributes->get('body-class', '') }}">
                 {!! $slot !!}
             </div>
-            <div class="modal-footer">
-                @if( $settings->footer_content )
-                {!! $settings->footer_content !!} 
-                @endif
 
-                @if( $settings->footer_close_text )
-                <button type="button" class="<?= $settings->footer_close_class ?>" data-bs-dismiss="modal"><?= $settings->footer_close_text ?></button>
+            @if( isset($footer) || $attributes->has('footer-close')  )              
+            <div class="modal-footer {{ $attributes->get('footer-class', '') }}">
+                @isset($footer)
+                {!! $footer !!} 
+                @endisset
+
+                @if( $attributes->has('footer-close') )
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
                 @endif
             </div>
+            @endif
+
         </div>
     </div>
 </div>
-
