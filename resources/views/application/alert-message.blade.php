@@ -12,7 +12,7 @@
 @foreach($colors as $status)
     @if( session()->has($status) )
     <x-alert color="{{ $status }}" close>
-        {!! session()->get($status) !!}
+        <span>{!! session()->get($status) !!}</span>
     </x-alert>
     @endif
 @endforeach

@@ -10,9 +10,9 @@
 </head>
 <body class="bg-light">
     @include('application.navbar')
-    @include('application.alert-message')
     <br>
     <div class="container">
+        @include('application.alert-message')
         @yield('content')
     </div>
     <br>
