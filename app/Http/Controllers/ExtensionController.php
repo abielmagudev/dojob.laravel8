@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ExtensionStoreRequest;
 use App\Models\Extension;
 use App\Models\FakeApiExtension;
 use Illuminate\Http\Request;
@@ -17,16 +18,20 @@ class ExtensionController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(ExtensionStoreRequest $request)
     {
-        $fakeApiExtension = FakeApiExtension::find( $request->extension );
+        if(! $extension = Extension::create( $request->validated() ) )
+        {
+            return back()->with('danger', 'Error saving the extension, please try again');
+        }
 
-        if(! $extension = Extension::install( $fakeApiExtension ) )
+        if(! $extension->model::install() )
+        {
+            $extension->delete();
             return back()->with('danger', 'Error installing the extension, please try again');
+        }
 
-        return redirect()->route('extensions.index')->with('success',
-            sprintf('Extension %s installed', $extension->name) 
-        );
+        return redirect()->route('extensions.index')->with('success', "Extension <b>{$extension->name}</b> installed");
     }
 
     /**
@@ -41,10 +46,10 @@ class ExtensionController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Extension $extension)
-    {
-        if(! Extension::uninstall($extension) ||! $extension->delete() )
+    {        
+        if(! $extension->model::uninstall() ||! $extension->delete() )
             return back()->with('danger', 'Error to uninstall the extension');
 
-        return redirect()->route('extensions.index')->with('success', "Extension {$extension->name} uninstalled");
+        return redirect()->route('extensions.index')->with('success', "Extension <b>{$extension->name}</b> uninstalled");
     }
 }

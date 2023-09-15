@@ -59,44 +59,4 @@ class Extension extends Model
     {
         return $this->belongsToMany(Job::class);
     }
-
-
-    // Getters
-
-    public static function prepareToCreate(object $apiExtension)
-    {
-        return [
-            'api_extension_id' => $apiExtension->id,
-            'name' => $apiExtension->name,
-            'classname' => $apiExtension->classname,
-            'description' => $apiExtension->description,
-        ];
-    }
-
-    public static function install(object $apiExtension)
-    {
-        $data = self::prepareToCreate( $apiExtension );
-
-        if(! $extension = self::create($data) )
-        {
-            return false;
-        }
-        
-        $extension->model::install();
-
-        if(! $extension->model::installed() )
-        {
-            $extension->delete();
-            return false;
-        }
-
-        return $extension;
-    }
-
-    public static function uninstall(Extension $extension)
-    {
-        $extension->model::uninstall();
-
-        return $extension->model::uninstalled();
-    }
 }

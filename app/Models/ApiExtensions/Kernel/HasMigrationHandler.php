@@ -20,6 +20,8 @@ trait HasMigrationHandler
                 '--force' => true
             ]);
         }
+
+        return self::installed();
     }
 
     public static function uninstall()
@@ -34,6 +36,8 @@ trait HasMigrationHandler
                 ]);
             }
         }
+
+        return self::uninstalled();
     }
 
     public static function installed()
