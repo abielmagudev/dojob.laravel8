@@ -10,11 +10,15 @@
     </form>
 </x-card>
 
-@include('orders._script-loader-job-extensions')
-@include('orders._script-select-job-extensions')
+@push('scripts') 
+    @include('orders._script-loader-job-extensions')
+    @include('orders._script-select-job-extensions')
 
-@if( old('job') )
-<script>selectJob.shootChangeEvent()</script>
-@endif
+    @if( old('job') )
+    <script>
+        selectJob.shootChangeEvent()
+    </script>
+    @endif
+@endpush
 
 @endsection
