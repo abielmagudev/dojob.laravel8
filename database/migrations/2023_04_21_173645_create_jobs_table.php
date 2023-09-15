@@ -18,6 +18,7 @@ return new class extends Migration
             $table->tinyInteger('successful_inspections_required', false, true)->default(0);
             $table->boolean('is_available')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
