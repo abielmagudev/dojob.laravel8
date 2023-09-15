@@ -1,13 +1,6 @@
 @extends('application')
 @section('content')
-<div class="text-end">
-    <form action="{{ route('extensions.index') }}" method="get">
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Tags like maintenance, insulation, carpenter..." name="tags" value="{{ $tags }}">
-            <button class="btn btn-primary" type="submit">Filter</button>
-          </div>
-    </form>
-</div>
+@include('extensions.index.search')
 <x-card>
     <div class="table-responsive">
         <table class="table table-hover align-middle">
