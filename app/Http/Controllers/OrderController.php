@@ -15,7 +15,7 @@ class OrderController extends Controller
     public function index()
     {
         return view('orders.index', [
-            'orders' => Order::with('job')->orderBy('id', 'desc')->get(),
+            'orders' => Order::with('job')->whereJobsAvailable()->orderBy('id', 'desc')->get(),
         ]);
     }
 
@@ -32,7 +32,7 @@ class OrderController extends Controller
     public function store(OrderStoreRequest $request)
     {
         if(! $order = Order::create($request->validated()) )
-            return back()->with('danger', 'Order not created, try again...');
+            return back()->with('danger', 'Order not created, please try again');
 
         if( $request->has('job_extensions_cache') )
         {            
@@ -56,11 +56,11 @@ class OrderController extends Controller
                     return $extension->name;
                 })->implode(',');
 
-                return back()->withInput($request->all())->with('danger', "Order was not created due to extension errors {$extension_failed_names}, try again...");
+                return back()->withInput($request->all())->with('danger', "Order was not created due to extension errors {$extension_failed_names}, please try again");
             }
         }
 
-        return redirect()->route('orders.index')->with('success', 'Order was created');
+        return redirect()->route('orders.index')->with('success', "Order <b>#{$order->id} {$order->job->name}</b> created");
     }
 
     public function show(Order $order)
@@ -78,7 +78,7 @@ class OrderController extends Controller
     public function update(OrderUpdateRequest $request, Order $order)
     {
         if( $order->fill( $request->validated() )->save() === false )
-            return back()->with('danger', 'Order not updated, try again...');
+            return back()->with('danger', 'Order not updated, plase try again');
     
         if( $request->has('job_extensions_cache') )
         {
@@ -90,17 +90,17 @@ class OrderController extends Controller
                     return $extension->name;
                 })->implode(',');
             
-                return back()->with('danger', "Order was updated, except for these extensions {$extension_failed_names}, try again...");
+                return back()->with('danger', "Order <b>#{$order->id} {$order->job->name}</b> was updated, except for these extensions <b>{$extension_failed_names}</b>, please try again");
             }
         }
 
-        return redirect()->route('orders.edit', $order)->with('success', 'Order was updated');
+        return redirect()->route('orders.edit', $order)->with('success', "Order <b>#{$order->id} {$order->job->name}</b> updated");
     }
 
     public function destroy(Request $request, Order $order)
     {
         if(! $order->delete() )
-            return back()->with('danger', 'Order not deleted, try again...');
+            return back()->with('danger', 'Order not deleted, please try again');
         
         if( $order->job->hasExtensions() )
         {            
@@ -111,6 +111,6 @@ class OrderController extends Controller
             ]);
         }
 
-        return redirect()->route('orders.index')->with('success', "Order #{$order->id} - {$order->job->name} was deleted");
+        return redirect()->route('orders.index')->with('success', "Order <b>#{$order->id} {$order->job->name}</b> deleted");
     }
 }

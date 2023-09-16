@@ -45,6 +45,16 @@ class Order extends Model
     }
 
 
+    // Scopes
+
+    public function scopeWhereJobsAvailable($query)
+    {
+        return $query->whereIn('job_id', 
+            (Job::all('id')->pluck('id')->toArray())
+        );
+    }
+
+
     // Relationships
 
     public function job()
