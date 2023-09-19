@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\ApiExtensions\Kernel;
 
-trait HasScriptResource
+trait HasScriptResourceTrait
 {
     public function scriptResource(string $method)
     {
