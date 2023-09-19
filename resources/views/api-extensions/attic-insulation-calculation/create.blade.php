@@ -1,5 +1,8 @@
 <?php
 $controls = (object) [
+    'wrapper' => (object) [
+        'id' => 'atticInsulationCalculationWrapper'
+    ],
     'method' => (object) [
         'id' => $class::concatPrefix('selectMethod'),
         'name' => $class::concatPrefix('method'),
@@ -19,7 +22,7 @@ $controls = (object) [
 ?>
 
 <h5 class="mb-3">Attic Insulation Calculation</h5>
-<div class="row" id="{{ $class::concatPrefix('atticInsulationCalculationWrapper') }}">
+<div class="row" id="{{ $controls->wrapper->id }}">
     {{-- Methods --}}
     <div class="col-sm">
         <div class="mb-3">

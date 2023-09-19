@@ -6,7 +6,7 @@ use Exception;
 use Illuminate\Support\Str;
 use ReflectionClass;
 
-trait HasReflectionHimself
+trait HasReflectionHimselfTrait
 {   
     static $reflection_cache = null;
     
@@ -20,12 +20,12 @@ trait HasReflectionHimself
     
     public static function prefix()
     {
-        return self::reflection()->hasProperty('prefix') ? self::reflection()->getProperty('prefix')->getValue() : '';
+        return self::reflection()->getConstant('PREFIX') ?? '';
     }
 
     public static function concatPrefix(string $text = null)
     {
-        return self::prefix() . $text;
+        return sprintf('%s_%s', self::prefix(), $text);
     }
 
     public static function getTableName()

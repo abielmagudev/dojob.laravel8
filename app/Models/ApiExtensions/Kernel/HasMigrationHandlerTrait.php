@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 
-trait HasMigrationHandler
+trait HasMigrationHandlerTrait
 {
     public static $database_path = '/database/migrations/api-extensions';
     

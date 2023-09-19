@@ -2,21 +2,21 @@
 
 namespace App\Models\ApiExtensions;
 
-use App\Models\ApiExtensions\Kernel\HasMigrationHandler;
-use App\Models\ApiExtensions\Kernel\HasOrderRelationship;
-use App\Models\ApiExtensions\Kernel\HasReflectionHimself;
-use App\Models\ApiExtensions\Kernel\Migratable;
+use App\Models\ApiExtensions\Kernel\HasMigrationHandlerTrait;
+use App\Models\ApiExtensions\Kernel\HasOrderRelationshipTrait;
+use App\Models\ApiExtensions\Kernel\HasReflectionHimselfTrait;
+use App\Models\ApiExtensions\Kernel\MigratableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AtticInsulationCalculation extends Model implements Migratable
+class AtticInsulationCalculation extends Model implements MigratableInterface
 {
     use HasFactory;
-    use HasMigrationHandler;
-    use HasOrderRelationship;
-    use HasReflectionHimself;
+    use HasMigrationHandlerTrait;
+    use HasOrderRelationshipTrait;
+    use HasReflectionHimselfTrait;
 
-    static $prefix = 'aic';
+    const PREFIX = 'aic';
 
     protected $table = 'api_extension_attic_insulation_calculation';
 

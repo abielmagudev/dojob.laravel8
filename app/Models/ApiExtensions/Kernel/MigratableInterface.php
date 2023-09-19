@@ -2,7 +2,7 @@
 
 namespace App\Models\ApiExtensions\Kernel;
 
-interface Migratable
+interface MigratableInterface
 {
     /**
      * return [
