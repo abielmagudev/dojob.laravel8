@@ -47,9 +47,14 @@ class Extension extends Model
         return sprintf('%s\\ApiExtensions\\%s', __NAMESPACE__, $this->classname);
     }
 
+    public function getRequestsNamespaceAttribute()
+    {
+        return sprintf('App\\Http\\Requests\\ApiExtensions\\%s', $this->classname);
+    }
+
     public function getFormRequest(string $form_request_name)
     {
-        return sprintf('App\\Http\\Requests\\ApiExtensions\\%s\\%s', $this->classname, $form_request_name);
+        return sprintf('%s\\%s', $this->requests_namespace, $form_request_name);
     }
 
 

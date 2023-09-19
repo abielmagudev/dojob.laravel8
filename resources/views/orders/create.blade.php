@@ -12,14 +12,13 @@
 </x-card>
 
 @push('scripts') 
-    @include('orders._script-loader-job-extensions')
-    @include('orders._script-select-job-extensions')
+    @include('orders._script-job-extensions-loader')
+    @include('orders._script-job-extensions-select')
 
     @if( old('job') )
     <script>
-        selectJob.shootChangeEvent()
+        selectJob.dispatchChangeEvent()
     </script>
     @endif
 @endpush
-
 @endsection

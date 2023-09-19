@@ -15,9 +15,14 @@
 
 @if( $order->job->hasExtensions() )
 @push('scripts') 
-    @include('orders._script-loader-job-extensions')
+    @include('orders._script-job-extensions-loader')
     <script>
-        jobExtensions.load("<?= route('orders-job-extensions.edit', $order) ?>")
+        extensionsJob.setup({
+            action: 'edit',
+            order: '<?= $order->id ?>'
+        })
+
+        extensionsJob.load("<?= $order->job->id ?>")
     </script>
 @endpush
 @endif

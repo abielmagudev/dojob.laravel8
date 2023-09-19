@@ -12,12 +12,17 @@
     </div>
 </div>
 
+{{-- Select job --}}
 <div class="mb-3">
     <label for="selectJob" class="form-label">Job</label>
+
     <div class="mb-3">
+        
+        {{-- Edit order's job --}}
         @if( $order->isReal() )
         <div class="form-control bg-light">{{ $order->job->name }}</div>
         
+        {{-- Create order's job --}}
         @else
         <select class="form-select {{ bsInputInvalid( $errors->has('job') ) }}" name="job" id='selectJob'>
             <option disabled selected label="Choose a job"></option>
@@ -29,9 +34,12 @@
     
         @endif
     </div>
-    <div id="jobExtensions">
+
+    {{-- Extensions of job selected --}}
+    <div id="extensionsJob">
+
         {{-- Spinner loader image --}}
-        <div id="spinner" class="text-center d-none">       
+        <div id="extensionsJobSpinner" class="text-center d-none">       
             <div class="spinner-border spinner-border-sm" role="status">
                 <span class="visually-hidden">Loading extensions...</span>
             </div>
@@ -39,7 +47,8 @@
         </div>
     
         {{-- Container templates rendered --}}
-        <div id='container' class="alert alert-light d-none" ></div>
+        <div id='extensionsJobContainer' class="bg-light rounded-1 p-3 d-none"></div>
+
     </div>
 </div>
 

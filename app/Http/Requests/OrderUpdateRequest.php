@@ -2,14 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\OrderRequests\ExtensionRequestsLoader;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Http\Requests\OrderRequests\HasJobExtensionsCache;
-use App\Http\Requests\OrderRequests\HasJobExtensionsRequests;
 
 class OrderUpdateRequest extends FormRequest
 {
-    use HasJobExtensionsCache;
-    use HasJobExtensionsRequests;
+    public $extensionRequestsLoader;
 
     public function authorize()
     {
@@ -18,7 +16,7 @@ class OrderUpdateRequest extends FormRequest
 
     public function rules()
     {
-        return $this->mergeExtensionFormRequestRules([
+        return $this->extensionRequestsLoader->mergeRules([
             'scheduled_date' => ['required'],
             'scheduled_time' => ['required'],
             'notes' => 'nullable',
@@ -27,7 +25,7 @@ class OrderUpdateRequest extends FormRequest
 
     public function messages()
     {
-        return $this->mergeExtensionFormRequestMessages([
+        return $this->extensionRequestsLoader->mergeMessages([
             'scheduled_date.required' => __('Date is required'),
             'scheduled_time.required' => __('Time is required'),
         ]);
@@ -35,12 +33,20 @@ class OrderUpdateRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        $job = $this->route('order')->job;
+        $this->extensionRequestsLoader = new ExtensionRequestsLoader( $this->route('order')->job );
 
-        if( is_null($job) ||! $job->hasExtensions() )
-            return;
+        $this->extensionRequestsLoader->load('UpdateRequest');
 
-        $this->loadExtensionFormRequests($job->extensions, 'UpdateRequest');
-        $this->cacheExtensions($job->extensions);
+        /**
+         * If job selected has extensions, then:
+         * A) Cache job extensions query for next use
+         * B) With this you avoid 2 or more subsequent queries
+         */
+        if( $this->extensionRequestsLoader->hasExtensions() )
+        {
+            $this->merge([
+                'job_extensions_cache' => $this->extensionRequestsLoader->getExtensions(),
+            ]);
+        }
     }
 }
