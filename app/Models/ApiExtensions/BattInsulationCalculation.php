@@ -2,20 +2,19 @@
 
 namespace App\Models\ApiExtensions;
 
-use App\Models\ApiExtensions\Kernel\HasMigrationUpdates;
-use App\Models\ApiExtensions\Kernel\HasHelpers;
+use App\Models\ApiExtensions\Kernel\ApiExtensionModelTrait;
+use App\Models\ApiExtensions\Kernel\MigratableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BattInsulationCalculation extends Model
+class BattInsulationCalculation extends Model implements MigratableInterface
 {
     use HasFactory;
-    use HasHelpers;
-    use HasMigrationUpdates;
+    use ApiExtensionModelTrait;
 
-    static $prefix = 'bic';
+    const PREFIX = 'bic';
 
-    protected $table = 'api_extension_batt_insulation_calculation';
+    protected $table = 'apix_batt_insulation_calculation';
 
     public static $all_methods_with_rvalues = [
         'attic' => array(
@@ -66,5 +65,12 @@ class BattInsulationCalculation extends Model
     public static function getAllSizes()
     {
         return self::$all_sizes;
+    }
+
+    public static function migrations(): array
+    {
+        return [
+            'apix_batt_insulation_calculation' => 'batt-insulation-calculation/create_batt_insulation_calculation_table.php'
+        ];
     }
 }

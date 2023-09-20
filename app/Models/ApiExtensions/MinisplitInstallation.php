@@ -2,20 +2,19 @@
 
 namespace App\Models\ApiExtensions;
 
-use App\Models\ApiExtensions\Kernel\HasHelpers;
-use App\Models\ApiExtensions\Kernel\HasMigrationUpdates;
+use App\Models\ApiExtensions\Kernel\ApiExtensionModelTrait;
+use App\Models\ApiExtensions\Kernel\MigratableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MinisplitInstallation extends Model
+class MinisplitInstallation extends Model implements MigratableInterface
 {
     use HasFactory;
-    use HasHelpers;
-    use HasMigrationUpdates;
+    use ApiExtensionModelTrait;
 
-    static $prefix = 'mi';
+    const PREFIX = 'mi';
 
-    protected $table = 'api_extension_minisplit_installation';
+    protected $table = 'apix_minisplit_installation';
 
     public static $all_pieces = [
         'air handler',
@@ -26,5 +25,15 @@ class MinisplitInstallation extends Model
     public static function getAllPieces()
     {
         return self::$all_pieces;
+    }
+
+    
+    // Migratable
+
+    public static function migrations(): array
+    {
+        return [
+            'apix_minisplit_installation' => 'minisplit-installation/create_minisplit_installation_table.php'
+        ];
     }
 }

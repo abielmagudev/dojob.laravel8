@@ -14,7 +14,7 @@ class CreateExampleExtensionTable extends Migration
      */
     public function up()
     {
-        Schema::create(ExampleExtension::getTableName(), function (Blueprint $table) {
+        Schema::create( ExampleExtension::getTableName(), function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -27,6 +27,6 @@ class CreateExampleExtensionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(ExampleExtension::getTableName());
+        Schema::dropIfExists( ExampleExtension::getTableName() );
     }
 }

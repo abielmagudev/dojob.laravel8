@@ -2,20 +2,19 @@
 
 namespace App\Models\ApiExtensions;
 
-use App\Models\ApiExtensions\Kernel\HasHelpers;
-use App\Models\ApiExtensions\Kernel\HasMigrationUpdates;
+use App\Models\ApiExtensions\Kernel\ApiExtensionModelTrait;
+use App\Models\ApiExtensions\Kernel\MigratableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class WallInsulationCalculation extends Model
+class WallInsulationCalculation extends Model implements MigratableInterface
 {
     use HasFactory;
-    use HasHelpers;
-    use HasMigrationUpdates;
+    use ApiExtensionModelTrait;
 
-    static $prefix = 'wic';
+    const PREFIX = 'wic';
 
-    protected $table = 'api_extension_wall_insulation_calculation';
+    protected $table = 'apix_wall_insulation_calculation';
 
     public static $all_methods_with_rvalues = [
         'airkrete' => [
@@ -44,5 +43,12 @@ class WallInsulationCalculation extends Model
     public static function getAllMethods()
     {
         return array_keys(self::$all_methods_with_rvalues);
+    }
+
+    public static function migrations(): array
+    {
+        return [
+            'apix_wall_insulation_calculation' => 'wall-insulation-calculation/create_wall_insulation_calculation_table.php'
+        ];
     }
 }

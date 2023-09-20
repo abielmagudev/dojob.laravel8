@@ -2,20 +2,19 @@
 
 namespace App\Models\ApiExtensions;
 
-use App\Models\ApiExtensions\Kernel\HasHelpers;
-use App\Models\ApiExtensions\Kernel\HasMigrationUpdates;
+use App\Models\ApiExtensions\Kernel\ApiExtensionModelTrait;
+use App\Models\ApiExtensions\Kernel\MigratableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AirConditioningInstallation extends Model
+class AirConditioningInstallation extends Model implements MigratableInterface
 {
     use HasFactory;
-    use HasHelpers;
-    use HasMigrationUpdates;
+    use ApiExtensionModelTrait;
 
-    static $prefix = 'aci';
+    const PREFIX = 'aci';
 
-    protected $table = 'api_extension_air_conditioning_installation';
+    protected $table = 'apix_air_conditioning_installation';
 
     public static $all_complete_items = [
         'change out',
@@ -74,5 +73,15 @@ class AirConditioningInstallation extends Model
     public static function getAllComponents()
     {
         return self::$all_components;
+    }
+
+
+    // Migratable
+    
+    public static function migrations(): array
+    {
+        return [
+            'apix_air_conditioning_installation' => 'air-conditioning-installation/create_air_conditioning_installation_table.php'
+        ];
     }
 }

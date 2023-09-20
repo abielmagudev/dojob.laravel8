@@ -2,9 +2,7 @@
 
 namespace App\Models\ApiExtensions;
 
-use App\Models\ApiExtensions\Kernel\HasMigrationHandlerTrait;
-use App\Models\ApiExtensions\Kernel\HasOrderRelationshipTrait;
-use App\Models\ApiExtensions\Kernel\HasReflectionHimselfTrait;
+use App\Models\ApiExtensions\Kernel\ApiExtensionModelTrait;
 use App\Models\ApiExtensions\Kernel\MigratableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,9 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class AtticInsulationCalculation extends Model implements MigratableInterface
 {
     use HasFactory;
-    use HasMigrationHandlerTrait;
-    use HasOrderRelationshipTrait;
-    use HasReflectionHimselfTrait;
+    use ApiExtensionModelTrait;
 
     const PREFIX = 'aic';
 

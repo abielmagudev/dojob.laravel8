@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use ApiExtensions;
 use App\Http\Requests\ExtensionStoreRequest;
+use App\Models\ApiExtensions\Kernel\ApiExtensionMigrator;
 use App\Models\Extension;
 use App\Models\FakeApiExtension;
 use Illuminate\Http\Request;
@@ -25,7 +27,7 @@ class ExtensionController extends Controller
             return back()->with('danger', 'Error saving the extension, please try again');
         }
 
-        if(! $extension->model::install() )
+        if( ApiExtensionMigrator::is($extension->model) &&! ApiExtensionMigrator::install($extension->model) )
         {
             $extension->delete();
             return back()->with('danger', 'Error installing the extension, please try again');
@@ -39,16 +41,19 @@ class ExtensionController extends Controller
      */
     public function update(Request $request, Extension $extension)
     {
-        //
+        // 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Extension $extension)
     {        
-        if(! $extension->model::uninstall() ||! $extension->delete() )
-            return back()->with('danger', 'Error to uninstall the extension');
+        if( ApiExtensionMigrator::is($extension->model) && ApiExtensionMigrator::installed( $extension->model::migrations() ) )
+        {
+            if(! ApiExtensionMigrator::uninstall($extension->model) )
+                return back()->with('danger', 'Error uninstalling extension database');
+        }
+        
+        if(! $extension->delete() )
+            return back()->with('danger', 'Error to uninstalling the extension');
 
         return redirect()->route('extensions.index')->with('success', "Extension <b>{$extension->name}</b> uninstalled");
     }
