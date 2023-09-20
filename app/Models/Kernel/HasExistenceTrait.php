@@ -2,7 +2,7 @@
 
 namespace App\Models\Kernel;
 
-trait HasExistenceHelpers
+trait HasExistenceTrait
 {
     public function isReal(): bool
     {
