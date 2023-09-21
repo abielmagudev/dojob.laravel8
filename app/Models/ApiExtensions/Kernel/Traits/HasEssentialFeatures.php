@@ -24,6 +24,11 @@ trait HasEssentialFeatures
         return sprintf('%s%s%s', self::PREFIX, $separator, $text);
     }
 
+    public static function getTableName()
+    {
+        return with(new self)->getTable();
+    }
+
     public static function prepareToSave(array $inputs, Order $order = null): array
     {
         $prepared = method_exists(self::class, 'prepareData') ? self::prepareData(...[$inputs, $order]) : $inputs;
