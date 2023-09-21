@@ -2,15 +2,15 @@
 
 namespace App\Models\ApiExtensions;
 
-use App\Models\ApiExtensions\Kernel\HasEssentialFeaturesTrait;
-use App\Models\ApiExtensions\Kernel\MigratableInterface;
+use App\Models\ApiExtensions\Kernel\Traits\HasEssentialFeatures;
+use App\Models\ApiExtensions\Kernel\Interfaces\Migratable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BattInsulationCalculation extends Model implements MigratableInterface
+class BattInsulationCalculation extends Model implements Migratable
 {
     use HasFactory;
-    use HasEssentialFeaturesTrait;
+    use HasEssentialFeatures;
 
     const PREFIX = 'bic';
 
