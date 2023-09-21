@@ -33,7 +33,9 @@ class OrderUpdateRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        $this->extensionRequestsLoader = new ExtensionRequestsLoader( $this->route('order')->job );
+        $job = $this->route('order')->job;
+
+        $this->extensionRequestsLoader = new ExtensionRequestsLoader($job);
 
         $this->extensionRequestsLoader->load('UpdateRequest');
 
@@ -42,10 +44,10 @@ class OrderUpdateRequest extends FormRequest
          * A) Cache job extensions query for next use
          * B) With this you avoid 2 or more subsequent queries
          */
-        if( $this->extensionRequestsLoader->hasExtensions() )
+        if( $job->hasExtensions() )
         {
             $this->merge([
-                'job_extensions_cache' => $this->extensionRequestsLoader->getExtensions(),
+                'job_extensions_cache' => $job->extensions,
             ]);
         }
     }

@@ -37,7 +37,9 @@ class OrderStoreRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        $this->extensionRequestsLoader = new ExtensionRequestsLoader( Job::find($this->job) );
+        $job = Job::find($this->job);
+
+        $this->extensionRequestsLoader = new ExtensionRequestsLoader($job);
 
         $this->extensionRequestsLoader->load('StoreRequest');
 
@@ -46,10 +48,10 @@ class OrderStoreRequest extends FormRequest
          * A) Cache job extensions query for next use
          * B) With this you avoid 2 or more subsequent queries
          */
-        if( $this->extensionRequestsLoader->hasExtensions() )
+        if( $job->hasExtensions() )
         {
             $this->merge([
-                'job_extensions_cache' => $this->extensionRequestsLoader->getExtensions(),
+                'job_extensions_cache' => $job->extensions,
             ]);
         }
     }
