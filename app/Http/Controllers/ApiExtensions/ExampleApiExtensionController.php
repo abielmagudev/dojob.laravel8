@@ -9,7 +9,7 @@ use App\Models\ApiExtensions\ExampleExtension;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
-class ExampleExtensionController extends Controller
+class ExampleApiExtensionController extends Controller
 {
     use HasScriptResourceTrait;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\ApiExtensions\ExampleExtension;
+namespace App\Http\Requests\ApiExtensions\ExampleApiExtension;
 
 use Illuminate\Foundation\Http\FormRequest;
 

@@ -7,7 +7,7 @@ use App\Models\ApiExtensions\Kernel\Interfaces\Migratable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ExampleExtension extends Model implements Migratable
+class ExampleApiExtension extends Model implements Migratable
 {
     use HasFactory;
     use HasEssentialFeatures;
@@ -22,7 +22,7 @@ class ExampleExtension extends Model implements Migratable
     public static function migrations(): array
     {
         return [
-            'apix_example_extension' => 'example-extension/create_apix_example_extension_table.php',
+            'apix_example_extension' => 'example-api-extension/create_apix_example_extension_table.php',
         ];
     }
 }
