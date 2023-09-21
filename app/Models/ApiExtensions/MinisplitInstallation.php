@@ -33,7 +33,7 @@ class MinisplitInstallation extends Model implements Migratable
     public static function migrations(): array
     {
         return [
-            'apix_minisplit_installation' => 'MinisplitInstallation/create_minisplit_installation_table.php'
+            'apix_minisplit_installation' => 'minisplit-installation/create_minisplit_installation_table.php'
         ];
     }
 }

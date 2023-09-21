@@ -122,7 +122,7 @@ class AtticInsulationCalculation extends Model implements Migratable
     public static function migrations(): array
     {
         return [
-            'apix_attic_insulation_calculation' => 'AtticInsulationCalculation/create_attic_insulation_calculation_table.php',
+            'apix_attic_insulation_calculation' => 'attic-insulation-calculation/create_attic_insulation_calculation_table.php',
         ];
     }
 }

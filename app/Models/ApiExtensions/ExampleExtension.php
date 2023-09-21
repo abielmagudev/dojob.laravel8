@@ -22,7 +22,7 @@ class ExampleExtension extends Model implements Migratable
     public static function migrations(): array
     {
         return [
-            'apix_example_extension' => 'ExampleExtension/create_apix_example_extension_table.php',
+            'apix_example_extension' => 'example-extension/create_apix_example_extension_table.php',
         ];
     }
 }

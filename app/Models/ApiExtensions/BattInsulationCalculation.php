@@ -70,7 +70,7 @@ class BattInsulationCalculation extends Model implements Migratable
     public static function migrations(): array
     {
         return [
-            'apix_batt_insulation_calculation' => 'BattInsulationCalculation/create_batt_insulation_calculation_table.php'
+            'apix_batt_insulation_calculation' => 'batt-insulation-calculation/create_batt_insulation_calculation_table.php'
         ];
     }
 }

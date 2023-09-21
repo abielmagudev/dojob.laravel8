@@ -81,7 +81,7 @@ class AirConditioningInstallation extends Model implements Migratable
     public static function migrations(): array
     {
         return [
-            'apix_air_conditioning_installation' => 'AirConditioningInstallation/create_air_conditioning_installation_table.php'
+            'apix_air_conditioning_installation' => 'air-conditioning-installation/create_air_conditioning_installation_table.php'
         ];
     }
 }
