@@ -48,7 +48,7 @@ class WallInsulationCalculation extends Model implements Migratable
     public static function migrations(): array
     {
         return [
-            'apix_wall_insulation_calculation' => 'wall-insulation-calculation/create_wall_insulation_calculation_table.php'
+            'apix_wall_insulation_calculation' => 'WallInsulationCalculation/create_wall_insulation_calculation_table.php'
         ];
     }
 }

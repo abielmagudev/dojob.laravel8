@@ -14,7 +14,7 @@ class AtticInsulationCalculation extends Model implements Migratable
 
     const PREFIX = 'aic';
 
-    protected $table = 'api_extension_attic_insulation_calculation';
+    protected $table = 'apix_attic_insulation_calculation';
 
     protected $fillable = [
         'method',
@@ -122,7 +122,7 @@ class AtticInsulationCalculation extends Model implements Migratable
     public static function migrations(): array
     {
         return [
-            'api_extension_attic_insulation_calculation' => 'attic-insulation-calculation/create_attic_insulation_calculation_table.php',
+            'apix_attic_insulation_calculation' => 'AtticInsulationCalculation/create_attic_insulation_calculation_table.php',
         ];
     }
 }

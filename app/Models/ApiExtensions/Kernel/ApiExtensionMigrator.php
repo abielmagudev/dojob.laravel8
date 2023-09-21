@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Schema;
 
 class ApiExtensionMigrator
 {
-    const DATABASE_PATH = '/database/migrations/api-extensions';
+    const DATABASE_PATH = '/database/migrations/ApiExtensions';
 
     public static function is(string $model)
     {
