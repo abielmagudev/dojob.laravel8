@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\OrderController;
+namespace App\Http\Controllers\OrderController\Traits;
 
 use App\Http\Controllers\OrderJobExtensionController;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
-trait ExtensionsDataHandlerTrait
+trait ExtensionsDataHandler
 {
     public function managesExtensionData(Collection $extensions, Request $request, Order $order, string $action)
     {

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\OrderJobExtensionController;
+namespace App\Http\Controllers\OrderJobExtensionController\Traits;
 
 use App\Models\Job;
 use App\Models\Order;
 
-trait RoutesAjaxActionsTrait
+trait RoutesAjaxActions
 {
     public $actions_ajax = [
         'create',

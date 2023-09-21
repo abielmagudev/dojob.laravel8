@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\OrderController\ExtensionsDataHandlerTrait;
-use App\Http\Controllers\OrderController\ReflashErrorsTrait;
+use App\Http\Controllers\OrderController\Traits\ExtensionsDataHandler;
+use App\Http\Controllers\OrderController\Traits\ReflashErrors;
 use App\Http\Requests\OrderStoreRequest;
 use App\Http\Requests\OrderUpdateRequest;
 use App\Models\Job;
@@ -11,8 +11,8 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 class OrderController extends Controller
 {
-    use ExtensionsDataHandlerTrait;
-    use ReflashErrorsTrait;
+    use ExtensionsDataHandler;
+    use ReflashErrors;
 
     public function index()
     {

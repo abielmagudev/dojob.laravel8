@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\OrderJobExtensionController;
+namespace App\Http\Controllers\OrderJobExtensionController\Traits;
 
 use Illuminate\Database\Eloquent\Collection;
 
-trait GroupExtensionResultsTrait
+trait GroupExtensionResults
 {
     public function groupByResult(Collection $extensions, string $status)
     {

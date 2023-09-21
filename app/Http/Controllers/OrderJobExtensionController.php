@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\OrderJobExtensionController\GroupExtensionResultsTrait;
-use App\Http\Controllers\OrderJobExtensionController\RoutesAjaxActionsTrait;
+use App\Http\Controllers\OrderJobExtensionController\Traits\GroupExtensionResults;
+use App\Http\Controllers\OrderJobExtensionController\Traits\RoutesAjaxActions;
 use App\Models\Job;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -11,8 +11,8 @@ use Illuminate\Support\Collection;
 
 class OrderJobExtensionController extends Controller
 {
-    use RoutesAjaxActionsTrait;
-    use GroupExtensionResultsTrait;
+    use GroupExtensionResults;
+    use RoutesAjaxActions;
 
     public function create(Job $job)
     {
