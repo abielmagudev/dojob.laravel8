@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Kernel\HasExistenceTrait;
+use App\Models\Kernel\Traits\HasExistence;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
-    use HasExistenceTrait;
+    use HasExistence;
 
     protected $table = 'orders';
     
