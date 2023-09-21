@@ -8,13 +8,10 @@ use Illuminate\Http\Request;
 
 class BattInsulationCalculationController extends Controller
 {
-    public function create(Request $request)
+    public function create()
     {
-        return [
-            'template' => view('api-extensions/batt-insulation-calculation/create', [
-                'class' => BattInsulationCalculation::class
-            ])->render(),
-            'script' => 'bic.js',
-        ];
+        return view('api-extensions/batt-insulation-calculation/create', [
+            'class' => BattInsulationCalculation::class
+        ]);
     }
 }

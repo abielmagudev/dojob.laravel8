@@ -7,11 +7,8 @@ use Illuminate\Http\Request;
 
 class MinisplitInstallationController extends Controller
 {
-    public function create(Request $request)
+    public function create()
     {
-        return [
-            'template' => view('api-extensions/minisplit-installation/create')->render(),
-            'script' => null,
-        ];
+        return view('api-extensions/minisplit-installation/create');
     }
 }

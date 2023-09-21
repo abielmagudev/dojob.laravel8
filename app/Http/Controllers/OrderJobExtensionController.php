@@ -22,7 +22,6 @@ class OrderJobExtensionController extends Controller
 
             return [
                 'view' => $controller->create()->render(),
-                'script' => method_exists($controller, 'scriptResource') ? $controller->scriptResource('create') : null,
             ];
 
         });
@@ -47,7 +46,6 @@ class OrderJobExtensionController extends Controller
 
             return [
                 'view' => $controller->edit($order)->render(),
-                'script' => method_exists($controller, 'scriptResource') ? $controller->scriptResource('edit') : null,
             ];
 
         });

@@ -21,15 +21,24 @@ const extensionsJob = {
             this.element.empty
         },
         draw: function (buffer) {
-            let body_cache = document.body
-
-            buffer.scripts.forEach( function (script) {
-                body_cache.appendChild(script)
-            })
-
             this.element.innerHTML = buffer.templates.join(
                 (extensionsJob.settings.custom.divider ?? extensionsJob.settings.default.divider)
             )
+
+            this.element.querySelectorAll('script.fake').forEach(function (scriptFake) {
+
+                // Remove loaded(exists) script to reload them again and it works
+                if( scriptLoaded = document.querySelector(`script[src="${scriptFake.src}"]`) )
+                {
+                    scriptLoaded.remove()
+                }
+
+                // Create new script element to load
+                let script = document.createElement('script')
+                    script.src = scriptFake.src
+
+                document.body.appendChild(script)
+            })
         }
     },
     settings: {
@@ -77,45 +86,19 @@ const extensionsJob = {
         },
         get: async function (job_id) {
             let url = this.url(job_id);
-
             let response = await fetch(url)
-
             let json = await response.json()
             
             return json.templates        
         }
     },
     buffer: function (templates) {
-
         let cache = {
             templates: [],
-            scripts: []
         }
 
-        templates.forEach(function (template) {
-
-            cache.templates.push(template.view)
-
-            if( template.script && template.script != null )
-            {
-                let templateScriptSource = "<?= url('assets/xjs') ?>" + '/' + template.script;
-
-                // Remove loaded(exists) script to reload them again and it works
-                if( scriptLoaded = document.querySelector(`script[src="${templateScriptSource}"]`) )
-                {
-                    scriptLoaded.remove()
-                }
-
-                // Create new script element to load
-                let script = document.createElement('script')
-                script.src = templateScriptSource
-                script.async = true
-                script.defer = true
-
-                cache.scripts.push(script)
-            }
-        })
-
+        templates.forEach( (template) => cache.templates.push(template.view) )
+        
         return cache;
     },
     reset: function () {

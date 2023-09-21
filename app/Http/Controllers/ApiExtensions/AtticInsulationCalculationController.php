@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\ApiExtensions;
 
-use App\Http\Controllers\ApiExtensions\Kernel\HasScriptResourceTrait;
 use App\Http\Controllers\Controller;
 use App\Models\ApiExtensions\AtticInsulationCalculation;
 use App\Models\Order;
@@ -10,13 +9,6 @@ use Illuminate\Http\Request;
 
 class AtticInsulationCalculationController extends Controller
 {
-    use HasScriptResourceTrait;
-
-    public $script_resources = [
-        'create' => 'aic.js',
-        'edit' => 'aic.js',
-    ];
-
     public function create()
     {
         return view('api-extensions/attic-insulation-calculation/create', [

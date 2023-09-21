@@ -10,9 +10,7 @@ class WallInsulationCalculationController extends Controller
 {
     public function create()
     {
-        return [
-            'template' => view('api-extensions/wall-insulation-calculation/create')->render(),
-        ];
+        return view('api-extensions/wall-insulation-calculation/create');
     }
 
     public function store(Request $request, Order $order)

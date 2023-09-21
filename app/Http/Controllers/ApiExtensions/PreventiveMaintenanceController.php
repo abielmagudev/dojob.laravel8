@@ -8,13 +8,10 @@ use Illuminate\Http\Request;
 
 class PreventiveMaintenanceController extends Controller
 {
-    public function create(Request $request)
+    public function create()
     {
-        return [
-            'template' => view('api-extensions/preventive-maintenance/create', [
-                'class' => PreventiveMaintenance::class,
-            ])->render(),
-            'script' => 'pm.js',
-        ];
+        return view('api-extensions/preventive-maintenance/create', [
+            'class' => PreventiveMaintenance::class,
+        ]);
     }
 }

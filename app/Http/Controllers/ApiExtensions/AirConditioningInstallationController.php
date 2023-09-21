@@ -7,10 +7,8 @@ use Illuminate\Http\Request;
 
 class AirConditioningInstallationController extends Controller
 {
-    public function create(Request $request)
+    public function create()
     {
-        return [
-            'template' => view('api-extensions/air-conditioning-installation/create')->render(),
-        ];
+        return view('api-extensions/air-conditioning-installation/create');
     }
 }

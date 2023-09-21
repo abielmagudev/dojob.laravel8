@@ -75,3 +75,5 @@ $controls = (object) [
         @endforeach
     </select>
 </div>
+
+<script src="{{ asset('assets/xjs/bic.js') }}" class="fake"></script>

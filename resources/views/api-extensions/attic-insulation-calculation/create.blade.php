@@ -95,3 +95,5 @@ $controls = (object) [
         </div>
     </div>
 </div>
+
+<script src="{{ asset('assets/xjs/aic.js') }}" class="fake"></script>

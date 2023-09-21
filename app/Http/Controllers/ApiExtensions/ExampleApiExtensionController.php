@@ -2,24 +2,17 @@
 
 namespace App\Http\Controllers\ApiExtensions;
 
-use App\Http\Controllers\ApiExtensions\Kernel\HasScriptResourceTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ApiExtensions\ExampleExtension\StoreRequest;
-use App\Models\ApiExtensions\ExampleExtension;
+use App\Models\ApiExtensions\ExampleApiExtension;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
 class ExampleApiExtensionController extends Controller
 {
-    use HasScriptResourceTrait;
-
-    public $script_resources = [
-        'method_name' => 'script_name.js'
-    ];
-
     public function index(Request $request)
     {
-        //
+        return ExampleApiExtension::all();
     }
 
     public function create()
