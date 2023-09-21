@@ -2,6 +2,7 @@
 
 namespace App\Models\ApiExtensions\Kernel;
 
+use App\Models\ApiExtensions\Kernel\Interfaces\Migratable;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
@@ -13,7 +14,7 @@ class ApiExtensionMigrator
 
     public static function is(string $model)
     {
-        return is_a($model, MigratableInterface::class, true);
+        return is_a($model, Migratable::class, true);
     }
 
     public static function install(string $model): bool

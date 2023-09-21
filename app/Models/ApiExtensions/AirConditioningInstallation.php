@@ -2,15 +2,15 @@
 
 namespace App\Models\ApiExtensions;
 
-use App\Models\ApiExtensions\Kernel\ApiExtensionModelTrait;
-use App\Models\ApiExtensions\Kernel\MigratableInterface;
+use App\Models\ApiExtensions\Kernel\Traits\HasEssentialFeatures;
+use App\Models\ApiExtensions\Kernel\Interfaces\Migratable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AirConditioningInstallation extends Model implements MigratableInterface
+class AirConditioningInstallation extends Model implements Migratable
 {
     use HasFactory;
-    use ApiExtensionModelTrait;
+    use HasEssentialFeatures;
 
     const PREFIX = 'aci';
 

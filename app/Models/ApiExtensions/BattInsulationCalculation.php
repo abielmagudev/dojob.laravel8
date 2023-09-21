@@ -2,7 +2,7 @@
 
 namespace App\Models\ApiExtensions;
 
-use App\Models\ApiExtensions\Kernel\ApiExtensionModelTrait;
+use App\Models\ApiExtensions\Kernel\HasEssentialFeaturesTrait;
 use App\Models\ApiExtensions\Kernel\MigratableInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class BattInsulationCalculation extends Model implements MigratableInterface
 {
     use HasFactory;
-    use ApiExtensionModelTrait;
+    use HasEssentialFeaturesTrait;
 
     const PREFIX = 'bic';
 

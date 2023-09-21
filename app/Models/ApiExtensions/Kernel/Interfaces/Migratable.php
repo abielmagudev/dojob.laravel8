@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\ApiExtensions\Kernel;
+namespace App\Models\ApiExtensions\Kernel\Interfaces;
 
 /**
  * migrations(): [
@@ -14,7 +14,7 @@ namespace App\Models\ApiExtensions\Kernel;
  *    n => 'path/migration.php',
  * ];
  */
-interface MigratableInterface
+interface Migratable
 {
     public static function migrations(): array;
 }
