@@ -19,12 +19,19 @@ class ApiExtensionMigrator
 
     public static function install(string $model): bool
     {
-        foreach($model::migrations() as $migration)
+        foreach($model::migrations() as $migration_filename)
         {
-            Artisan::call('migrate', [
-                '--path' => sprintf('%s/%s', self::DATABASE_PATH, $migration), 
-                '--force' => true
-            ]);
+            // Artisan::call('migrate', [
+            //     '--path' => self::path($migration_filename), 
+            //     '--force' => true
+            // ]);
+
+            $migration = include_once( self::path($migration_filename) );
+            
+            $migration->up();
+
+            if( method_exists($model, 'afterInstalled') )
+                $model::afterInstalled();
         }
 
         return self::installed( $model::migrations() );
@@ -32,12 +39,19 @@ class ApiExtensionMigrator
 
     public static function uninstall(string $model): bool
     {
-        foreach($model::migrations() as $migration)
+        foreach($model::migrations() as $migration_filename)
         {
-            Artisan::call('migrate:rollback', [
-                '--path' => sprintf('%s/%s', self::DATABASE_PATH, $migration), 
-                '--force' => true
-            ]);
+            // Artisan::call('migrate:rollback', [
+            //     '--path' => self::path($migration_filename), 
+            //     '--force' => true
+            // ]);
+
+            $migration = include_once( self::path($migration_filename) );
+
+            $migration->down();
+
+            if( method_exists($model, 'afterUninstalled') )
+                $model::afterUninstalled();
         }
 
         return self::uninstalled( $model::migrations() );
@@ -55,5 +69,12 @@ class ApiExtensionMigrator
     public static function uninstalled(array $migrations): bool
     {
         return ! self::installed($migrations);
+    }
+
+    private static function path($migration_filename)
+    {
+        return database_path("migrations/api-extensions/{$migration_filename}");
+        
+        // return sprintf('%s/%s', self::DATABASE_PATH, $migration_filename);
     }
 }
