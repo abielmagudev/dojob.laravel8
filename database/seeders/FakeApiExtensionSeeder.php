@@ -61,6 +61,13 @@ class FakeApiExtensionSeeder extends Seeder
                 'tags_csv_format' => 'insulation,wheaterization,out house,in house',
                 'price' => '120',
             ],
+            [
+                'name' => 'Weatherization',
+                'classname' => 'Weatherization',
+                'description' => 'Weatherization.',
+                'tags_csv_format' => 'insulation, wheaterization, out house, in house',
+                'price' => '399.99',
+            ],
         ];
     }
 }
