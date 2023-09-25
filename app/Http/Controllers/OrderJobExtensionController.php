@@ -8,6 +8,7 @@ use App\Models\Job;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\View\View;
 
 class OrderJobExtensionController extends Controller
 {
@@ -16,15 +17,15 @@ class OrderJobExtensionController extends Controller
 
     public function create(Job $job)
     {
-        return $job->extensions->map(function ($extension) {
+        $views = $job->extensions->map(function ($extension) {
             
-            $controller = app($extension->controller);
+            $response = app($extension->controller)->callAction('create', []);
 
-            return [
-                'view' => $controller->create()->render(),
-            ];
+            return is_a($response, View::class) ? $response->render() : null;
 
         });
+
+        return $views->filter();
     }
 
     public function store(Collection $extensions, Request $request, Order $order)
@@ -40,15 +41,15 @@ class OrderJobExtensionController extends Controller
 
     public function edit(Job $job, Order $order)
     {
-        return $job->extensions->map(function ($extension) use ($order) {
+        $views = $job->extensions->map(function ($extension) use ($order) {
             
-            $controller = app($extension->controller);
+            $response = app($extension->controller)->callAction('edit', [$order]);
 
-            return [
-                'view' => $controller->edit($order)->render(),
-            ];
-
+            return is_a($response, View::class) ? $response->render() : null;
+            
         });
+
+        return $views->filter();
     }
 
     public function update(Collection $extensions, Request $request, Order $order)

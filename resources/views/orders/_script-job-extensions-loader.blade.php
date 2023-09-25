@@ -97,7 +97,7 @@ const extensionsJob = {
             templates: [],
         }
 
-        templates.forEach( (template) => cache.templates.push(template.view) )
+        templates.forEach( (template) => cache.templates.push(template) )
         
         return cache;
     },
