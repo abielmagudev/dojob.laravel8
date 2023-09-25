@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('apix_weatherization', function (Blueprint $table) {
-            $table->unsignedSmallInteger('product_id')->index();
-            $table->unsignedSmallInteger('quantity');
-            $table->unsignedInteger('order_id')->index();
-            $table->dateTime('created_at')->index();
+        Schema::create('apix_weatherization_products', function (Blueprint $table) {
+            $table->string('name')->unique();
+            $table->decimal('unit_price', 8, 2, true)->nullable();
+            $table->unsignedInteger('category_id')->nullable()->index();
+            $table->timestamps();
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('apix_weatherization');
+        Schema::dropIfExists('apix_weatherization_products');
     }
 };
