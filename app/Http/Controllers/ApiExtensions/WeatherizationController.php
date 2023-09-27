@@ -4,6 +4,8 @@ namespace App\Http\Controllers\ApiExtensions;
 
 use App\Http\Controllers\Controller;
 use App\Models\ApiExtensions\Weatherization;
+use App\Models\ApiExtensions\Weatherization\WeatherizationCategory;
+use App\Models\ApiExtensions\Weatherization\WeatherizationProduct;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
@@ -30,15 +32,12 @@ class WeatherizationController extends Controller
         ];
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show()
     {
-        //
+        return view('api-extensions.weatherization.show', [
+            'categories' => WeatherizationCategory::all(),
+            'products' => WeatherizationProduct::with('category')->get(),
+        ]);
     }
 
     public function edit(Order $order)

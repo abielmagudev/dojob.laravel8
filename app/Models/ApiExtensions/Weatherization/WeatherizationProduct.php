@@ -13,4 +13,9 @@ class WeatherizationProduct extends Model
         'unit_price',
         'category_id',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(WeatherizationCategory::class);
+    }
 }

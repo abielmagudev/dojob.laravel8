@@ -12,6 +12,11 @@ class WeatherizationCategory extends Model
         'name',
     ];
 
+    public function products()
+    {
+        return $this->hasMany(WeatherizationProduct::class);
+    }
+
     public static function install()
     {
         foreach(self::stock() as $category_name)

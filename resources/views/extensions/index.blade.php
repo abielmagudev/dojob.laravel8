@@ -25,11 +25,12 @@
                         </td>
                         <td class='text-end'>
                             @if( $extensions->contains('api_extension_id', '=', $apiExtension->id) )
-                            <form action="{{ route('extensions.destroy', $apiExtension->id) }}" method="post">
+                            <a class="btn btn-outline-primary w-100" href="{{ route('extensions.show', $apiExtension->id) }}">Settings</a>
+                            {{-- <form action="{{ route('extensions.destroy', $apiExtension->id) }}" method="post">
                                 @csrf
                                 @method('delete')
                                 <button class="btn btn-outline-danger w-100" type="submit">Uninstall</button>
-                            </form>
+                            </form> --}}
                             
                             @else
                             <button class="btn btn-outline-success w-100" type="submit" form="formInstallExtension" name="extension" value="{{ $apiExtension->id }}">Install</button>

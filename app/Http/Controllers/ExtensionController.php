@@ -36,6 +36,17 @@ class ExtensionController extends Controller
         return redirect()->route('extensions.index')->with('success', "Extension <b>{$extension->name}</b> installed");
     }
 
+    public function show($id)
+    {
+        $extension = Extension::whereApiExtension($id)->first();
+
+        $response = app($extension->controller)->callAction('show', []);
+
+        return view('extensions.show', [
+            'rendered' => $response->render(),
+        ]);
+    }
+
     /**
      * Update the specified resource in storage.
      */

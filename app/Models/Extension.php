@@ -58,6 +58,14 @@ class Extension extends Model
     }
 
 
+    // Scopes
+
+    public function scopeWhereApiExtension($query, $api_extension_id)
+    {
+        return $query->where('api_extension_id', $api_extension_id);
+    }
+
+
     // Relations
 
     public function jobs()
