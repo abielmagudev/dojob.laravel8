@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', fn() => view('welcome') );
+
 Route::resource('extensions', ExtensionController::class);
+
 Route::resource('jobs', JobController::class);
 Route::resource('orders', OrderController::class);
 

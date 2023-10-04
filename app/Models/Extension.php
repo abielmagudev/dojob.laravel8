@@ -4,48 +4,53 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use ReflectionClass;
 
 class Extension extends Model
 {
     use HasFactory;
-    
-    protected $primaryKey = 'api_extension_id';
+    use SoftDeletes;
 
     protected $fillable = [
-        'api_extension_id',
         'name',
         'classname',
         'description',
     ];
 
     
-    // Attributes
+    // Model attributes
 
-    public function getApiIdAttribute()
+    public function getModelPathAttribute()
     {
-        return $this->api_extension_id;
-    }
-
-    public function getInitialsNameAttribute()
-    {
-        $words = explode(' ', $this->name);
-
-        $initials_name = array_map(function ($word) {
-            return ctype_alpha($word[0]) ? $word[0] : '';
-        }, $words);
-
-        return implode($initials_name);
-    }
-
-    public function getControllerAttribute()
-    {
-        return sprintf('App\\Http\\Controllers\\ApiExtensions\\%sController', $this->classname);
+        return sprintf('%s\\ApiExtensions\\%s', __NAMESPACE__, $this->classname);
     }
 
     public function getModelAttribute()
     {
-        return sprintf('%s\\ApiExtensions\\%s', __NAMESPACE__, $this->classname);
+        return sprintf('%s\\%s', $this->model_path, $this->classname);
     }
+
+    
+    // Controller attributes
+
+    public function getControllerPathAttribute()
+    {
+        return sprintf('App\\Http\\Controllers\\ApiExtensions\\%s', $this->classname);
+    }
+
+    public function getControllerAttribute()
+    {
+        return sprintf('%s\\%sController', $this->controller_path, $this->classname);
+    }
+
+    public function getControllerSettingsAttribute()
+    {
+        return sprintf('%s\\%sSettingsController', $this->controller_path, $this->classname);
+    }
+
+
+    // Form requests attributes
 
     public function getRequestsNamespaceAttribute()
     {
@@ -55,14 +60,6 @@ class Extension extends Model
     public function getFormRequest(string $form_request_name)
     {
         return sprintf('%s\\%s', $this->requests_namespace, $form_request_name);
-    }
-
-
-    // Scopes
-
-    public function scopeWhereApiExtension($query, $api_extension_id)
-    {
-        return $query->where('api_extension_id', $api_extension_id);
     }
 
 

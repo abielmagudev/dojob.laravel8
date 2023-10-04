@@ -8,7 +8,6 @@ use App\Models\ApiExtensions\Weatherization\WeatherizationCategory;
 use App\Models\ApiExtensions\Weatherization\WeatherizationProduct;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Schema;
 
 class Weatherization extends Model implements Migratable
 {
@@ -34,15 +33,5 @@ class Weatherization extends Model implements Migratable
             'apix_weatherization_categories' => 'weatherization/create_weatherization_categories_table.php',
             'apix_weatherization_products' => 'weatherization/create_weatherization_products_table.php',
         ];
-    }
-
-    public static function afterInstalled()
-    {
-        if(! Schema::hasTable('apix_weatherization_products') )
-            return;
-
-        WeatherizationCategory::install();
-
-        // WeatherizationProduct::install();
     }
 }
